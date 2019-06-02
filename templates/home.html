@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <h1>Home Page</h1>
+
+        {% for f in dirList %}
+        <li>File: <a href="/{{currentDir}}-{{ f }}">{{f}}</a></li>
+        {% endfor %}
+{% endblock content %}
+
+
