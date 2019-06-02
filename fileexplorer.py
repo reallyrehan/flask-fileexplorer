@@ -15,18 +15,13 @@ def filePage(var):
         else:
             os.chdir(i)
     
-    
 
 
+    dirList = list(filter(lambda x: os.path.isdir(x), os.listdir('.')))
+    fileList = list(filter(lambda x: os.path.isfile(x), os.listdir('.')))
 
 
-    dirList = os.listdir()
-
-
-
-
-
-    return render_template('home.html',dirList=dirList,currentDir=var)
+    return render_template('home.html',dirList=dirList,fileList=fileList,currentDir=var)
 
 @app.route('/', methods=['GET'])
 def homePage():
