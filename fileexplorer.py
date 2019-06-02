@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 import os
 
 app = Flask(__name__)
@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/<var>', methods=['GET'])
 def filePage(var):
-    pathC = var.split('-')
+    pathC = var.split('>')
     os.chdir('/')
 
     for i in pathC:
@@ -28,6 +28,24 @@ def homePage():
     currentDir = '/'
     dirList = os.listdir(currentDir)
     return render_template('home.html',dirList=dirList,currentDir='')
+
+
+@app.route('/download/<var>')
+def downloadFile(var):
+    os.chdir('/')
+
+    pathC = var.split('>')
+    if(pathC[0]==''):
+        pathC.remove(pathC[0])
+    
+    fPath = '/'.join(pathC)
+    fPath='/'+fPath
+    fName=pathC[len(pathC)-1]
+    #print(fPath)
+    return send_file(fPath, attachment_filename=fName)
+
+
+
 
 if __name__ == '__main__':
     app.run(host= '0.0.0.0',debug=True)

@@ -3,8 +3,13 @@
     <h1>Home Page</h1>
 
         {% for f in dirList %}
-        <li>File: <a href="/{{currentDir}}-{{ f }}">{{f}}</a></li>
+        <li>File: <a href="/{{currentDir}}>{{ f }}">{{f}}</a></li>
         {% endfor %}
+
+        {% for f in fileList %}
+        <li>File: <a href="/download/{{currentDir}}>{{ f }}">{{f}}</a></li>
+        {% endfor %}
+
 {% endblock content %}
 
 
