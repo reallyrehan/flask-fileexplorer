@@ -15,4 +15,4 @@ Server works on,
 
 Flask has been used to run the server and serve up the html pages. Meanwhile, Bootstrap has been used to show the Folders and the Files. To open any folder, just click on it and to download/stream any file, just click on it.
 
-![Demo Image](demo.jpg)
+![Demo](demo.png)
