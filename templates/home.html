@@ -49,6 +49,10 @@
                     {% elif ('.mp4' in f) %} 
                     <div class="thumbnail">
                             <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/mp4.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
+                    </div> 
+                    {% elif ('.mp3' in f) %} 
+                    <div class="thumbnail">
+                            <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/mp3.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
                     </div>   
 
                         {% else %} 

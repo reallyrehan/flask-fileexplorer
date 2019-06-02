@@ -1,4 +1,5 @@
-Change Folder icons
-Change File icons
-Implement Video Streaming
-Implement Back/Forward Button
+Change Folder icons - Done
+Change File icons - Done
+Implement Video Streaming - Works Already
+Implement Back/Forward Button 
+Upload Button	
