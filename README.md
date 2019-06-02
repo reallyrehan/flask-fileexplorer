@@ -17,3 +17,22 @@ I have written it in Python using the following web frameworks,
 Flask has been used to run the server and serve up the html pages. Meanwhile, Bootstrap has been used to show the Folders and the Files. To open any folder, just click on it and to download/stream any file, just click on it.
 
 ![Demo](demo.png)
+
+**How to Run**
+-
+Clone this repository by using,
+    
+    git clone https://github.com/reallyrehan/flask-fileexplorer.git
+
+Make sure you have flask installed. You can use the following command to install flask,
+
+    pip install Flask
+    
+Now, open terminal/command prompt in the flask-fileexplorer directory and run the fileexplorer.py file by using the following command,
+
+    python fileexplorer.py
+    
+This should start the Flask Server in your terminal window. You can access it by going to,
+- **localhost:5000** (on your server's browser)
+- **(IP Address of your Server):5000** (from any other browser on the same network)
+  
