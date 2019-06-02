@@ -8,12 +8,14 @@ app = Flask(__name__)
 def filePage(var):
     pathC = var.split('>')
     os.chdir('/')
-
     for i in pathC:
         if i=='':
             continue
         else:
-            os.chdir(i)
+            try:
+                os.chdir(i)
+            except:
+                print(1)
     
 
 
