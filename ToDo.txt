@@ -3,3 +3,4 @@ Change File icons - Done
 Implement Video Streaming - Works Already
 Implement Back/Forward Button 
 Upload Button	
+Add File Protection (limit files that are shared)
