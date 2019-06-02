@@ -7,6 +7,7 @@ Server works on,
 - Linux
 - Mac
 
+I have written it in Python using the following web frameworks,
 
 **Frameworks**
 -
