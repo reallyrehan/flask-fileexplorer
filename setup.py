@@ -3,6 +3,23 @@ import os
 
 app = Flask(__name__)
 
+f= open('hidden.txt','r')
+fileText=f.read()
+fileText = fileText.split('\n')
+
+hiddenList = []
+for i in fileText:
+    hiddenList.append(i)
+
+
+def hidden(path):
+    for i in hiddenList:
+        if i in path:
+            return True
+    
+    return False
+
+
 
 def changeDirectory(path):
     pathC = path.split('>')
@@ -21,10 +38,30 @@ def changeDirectory(path):
     
 def getDirList():
 
-    return list(filter(lambda x: os.path.isdir(x), os.listdir('.')))
+
+    dList= list(filter(lambda x: os.path.isdir(x), os.listdir('.')))
+    finalList = []
+    curDir=os.getcwd()
+
+    for i in dList:
+        if(hidden(curDir+'/'+i)==False):
+            finalList.append(i)
+
+    return(finalList)
+
 
 def getFileList():
-    return list(filter(lambda x: os.path.isfile(x), os.listdir('.')))
+
+    dList = list(filter(lambda x: os.path.isfile(x), os.listdir('.')))
+
+    finalList = []
+    curDir=os.getcwd()
+
+    for i in dList:
+        if(hidden(curDir+'/'+i)==False):
+            finalList.append(i)
+
+    return(finalList)
 
 
 
@@ -63,6 +100,11 @@ def downloadFile(var):
     
     fPath = '/'.join(pathC)
     fPath='/'+fPath
+    if(hidden(fPath)):
+        #FILE HIDDEN
+        return redirect("/", code=100)
+
+
     fName=pathC[len(pathC)-1]
     #print(fPath)
     return send_file(fPath, attachment_filename=fName)
