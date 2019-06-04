@@ -3,13 +3,38 @@ import os
 
 app = Flask(__name__)
 
-f= open('hidden.txt','r')
-fileText=f.read()
-fileText = fileText.split('\n')
+try:
+    f= open('hidden.txt','r')
+    fileText=f.read()
+    fileText = fileText.split('\n')
+except:
+    fileText=[]
 
 hiddenList = []
 for i in fileText:
     hiddenList.append(i)
+f.close()
+
+
+try:
+    f= open('favorites.txt','r')
+    fileText=f.read()
+    fileText = fileText.split('\n')
+except:
+    fileText=[]
+
+favList = []
+for i in fileText:
+    favList.append(i.replace('/','>'))
+f.close()
+if(len(favList)>3):
+    favList=favList[0:3]
+
+
+
+
+
+
 
 
 def hidden(path):
@@ -80,13 +105,14 @@ def filePage(var):
     fileList = getFileList()
 
 
-    return render_template('home.html',dirList=dirList,fileList=fileList,currentDir=var)
+    return render_template('home.html',dirList=dirList,fileList=fileList,currentDir=var,favList=favList)
 
 @app.route('/', methods=['GET'])
 def homePage():
     os.chdir('/')
     dirList = getDirList()
-    return render_template('home.html',dirList=dirList,currentDir='')
+    fileList=getFileList()
+    return render_template('home.html',dirList=dirList,fileList=fileList,currentDir='/',favList=favList)
 
 
 @app.route('/download/<var>')
