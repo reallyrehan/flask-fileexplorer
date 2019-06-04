@@ -1,76 +1,67 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div class="container" style="margin-bottom:80px">
-        <nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-info">
-          <a class="navbar-brand" href="#">File Explorer</a>
-        </nav>
-      </div>
-        <div class='container'>
-            
+    <nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-info">
+        <a class="navbar-brand" href="#">File Explorer</a>
+    </nav>
+</div>
+<div class='container'>
+    
 
-        <div class = 'row mt-4'>
-        
-        {% for f in dirList %}
-        
-            <div class="col-md-2">
+    <div class = 'row mt-4'>
 
-                    
-                    <div class="thumbnail">
-                        <a href="/{{currentDir}}>{{ f }}"><img src = '/static/folder2.jpg' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
-                    </div>
-            </div>
-        {% if (loop.index is divisibleby 6) %}
+    {% for f in dirList %}
+        <div class="col-md-2">
+                <div class="thumbnail">
+                    <a href="/{{currentDir}}>{{ f }}"><img src = '/static/folder2.jpg' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
+                </div>
         </div>
-        <div class = 'row mt-4'>
-        {% endif %}
+    {% if (loop.index is divisibleby 6) %}
+    </div>
+
+    <div class = 'row mt-4'>
+    {% endif %}
+
+    {% endfor %}
+    </div>
+</div>
+
+
+
+<div class='container'>
+    
+
+    <div class = 'row mt-4'>
+        
+    {% for f in fileList %}
+    
+        <div class="col-md-2">
+            <div class="thumbnail">
+            {% if ('.jpg' in  f) or ('.png' in f) %} 
+                    <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/image.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
+            {% elif ('.mp4' in f) %} 
+                    <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/mp4.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
+            {% elif ('.mp3' in f) %} 
+                    <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/mp3.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
+
+            {% else %} 
+                    <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/file-icon.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    {% if (loop.index is divisibleby 6) %}
+    </div>
+    <div class = 'row mt-4'>
+    {% endif %}
 
         
 
 
         {% endfor %}
-        </div>
-        </div>
-
-
-
-        <div class='container'>
-            
-
-            <div class = 'row mt-4'>
-                
-            {% for f in fileList %}
-            
-                <div class="col-md-2">
-                        {% if ('.jpg' in  f) or ('.png' in f) %} 
-                    <div class="thumbnail">
-                            <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/image.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
-                    </div>
-                    {% elif ('.mp4' in f) %} 
-                    <div class="thumbnail">
-                            <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/mp4.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
-                    </div> 
-                    {% elif ('.mp3' in f) %} 
-                    <div class="thumbnail">
-                            <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/mp3.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
-                    </div>   
-
-                        {% else %} 
-                    <div class="thumbnail">
-                            <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/file-icon.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
-                    </div>     
-                {% endif %}
-                </div>
-            {% if (loop.index is divisibleby 6) %}
-            </div>
-            <div class = 'row mt-4'>
-            {% endif %}
-        
-                
-        
-        
-                {% endfor %}
-            </div>
-        </div>
+    </div>
+</div>
 
         
 {% endblock content %}

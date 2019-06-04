@@ -4,3 +4,6 @@ Implement Video Streaming - Works Already
 Implement Back/Forward Button 
 Upload Button	
 Add File Protection (limit files that are shared)
+Add Download Folder option (Zip folder)
+Add Security Features
+change to setup.py

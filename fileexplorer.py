@@ -4,6 +4,11 @@ import os
 app = Flask(__name__)
 
 
+
+
+
+
+
 @app.route('/<var>', methods=['GET'])
 def filePage(var):
     pathC = var.split('>')
