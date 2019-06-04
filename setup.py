@@ -112,7 +112,7 @@ def homePage():
     os.chdir('/')
     dirList = getDirList()
     fileList=getFileList()
-    return render_template('home.html',dirList=dirList,fileList=fileList,currentDir='/',favList=favList)
+    return render_template('home.html',dirList=dirList,fileList=fileList,currentDir="",favList=favList)
 
 
 @app.route('/download/<var>')
@@ -132,7 +132,10 @@ def downloadFile(var):
 
     fName=pathC[len(pathC)-1]
     #print(fPath)
-    return send_file(fPath, attachment_filename=fName)
+    try:
+        return send_file(fPath, attachment_filename=fName)
+    except:
+        return redirect("PERMISSION DENIED", code=200)
 
 
 
