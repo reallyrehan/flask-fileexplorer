@@ -12,8 +12,8 @@
 
     {% for f in dirList %}
         <div class="col-md-2">
-                <div class="thumbnail">
-                    <a href="/{{currentDir}}>{{ f }}"><img src = '/static/folder2.jpg' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
+                <div class="thumbnail hvr-glow">
+                    <a href="/{{currentDir}}>{{ f }}"><img src = '/static/folder2.jpg' class='img-thumbnail' style="border:0px"/><p style="color:black; text-align:center; text-decoration:none;">{{f[:15]}}</p></a>
                 </div>
         </div>
     {% if (loop.index is divisibleby 6) %}
@@ -36,17 +36,23 @@
     {% for f in fileList %}
     
         <div class="col-md-2">
-            <div class="thumbnail">
-            {% if ('.jpg' in  f) or ('.png' in f) %} 
-                    <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/image.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
-            {% elif ('.mp4' in f) %} 
-                    <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/mp4.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
-            {% elif ('.mp3' in f) %} 
-                    <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/mp3.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
+            <div class="thumbnail hvr-glow">
+                <a href="/download/{{currentDir}}>{{ f }}">
+                {% if ('.jpg' in  f) or ('.png' in f) %} 
+                    <img src = '/static/image.png' class='img-thumbnail' style="border:0px"/>
+                {% elif ('.mp4' in f) %} 
+                    <img src = '/static/mp4.png' class='img-thumbnail' style="border:0px"/>
+                {% elif ('.mp3' in f) %} 
+                    <img src = '/static/mp3.png' class='img-thumbnail' style="border:0px"/>
 
-            {% else %} 
-                    <a href="/download/{{currentDir}}>{{ f }}"><img src = '/static/file-icon.png' class='img-thumbnail' style="border:0px"/><p style="color:black;text-align: center;">{{f[:15]}}</p></a>
-            {% endif %}
+                {% else %} 
+                    <img src = '/static/file-icon.png' class='img-thumbnail' style="border:0px"/>
+                {% endif %}
+
+                        <p p style="color:black; text-align:center;">{{f[:15]}}</p>
+                </a>
+
+            
             </div>
         </div>
     

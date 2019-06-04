@@ -29,7 +29,6 @@ def changeDirectory(path):
         pathC.remove(pathC[0])
     
     myPath = '/'.join(pathC)
-
     try:
         os.chdir(myPath)
         return True
