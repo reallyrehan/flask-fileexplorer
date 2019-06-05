@@ -4,6 +4,8 @@ Implement Video Streaming - Works Already
 Implement Back/Forward Button 
 Upload Button	
 Add Download Folder option (Zip folder)
-Add Security Features - Added Hiding
-change to setup.py
-Remove inline css to separate css file
+Add Security Features - Added Hiding (Done)
+change to setup.py - Done
+Remove inline css to separate css file - Partially Done
+Add Favorites - Done
+Fix Mobile CSS 

@@ -34,7 +34,7 @@
     {% for f in dirList %}
         <div class="col-md-2">
                 <div class="thumbnail hvr-glow">
-                    <a href="/{{currentDir}}>{{ f }}"><img src = '/static/folder2.jpg' class='img-thumbnail' style="border:0px"/><p style="color:black; text-align:center; text-decoration:none;">{{f[:15]}}</p></a>
+                    <a href="/{{currentDir}}>{{ f }}"><img src = '/static/folder2.jpg' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">{{f[:15]}}</p></a>
                 </div>
         </div>
     {% if (loop.index is divisibleby 6) %}
@@ -70,7 +70,7 @@
                     <img src = '/static/file-icon.png' class='img-thumbnail' style="border:0px"/>
                 {% endif %}
 
-                        <p p style="color:black; text-align:center;">{{f[:15]}}</p>
+                        <p style="color:black; text-align:center;">{{f[:15]}}</p>
                 </a>
 
             
