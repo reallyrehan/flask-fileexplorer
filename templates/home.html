@@ -32,17 +32,12 @@
     <div class = 'row mt-4'>
 
     {% for f in dirList %}
-        <div class="col-md-2">
+        <div class="col-md-2 col-xs-4">
                 <div class="thumbnail hvr-glow">
                     <a href="/{{currentDir}}>{{ f }}"><img src = '/static/folder2.jpg' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">{{f[:15]}}</p></a>
                 </div>
         </div>
-    {% if (loop.index is divisibleby 6) %}
-    </div>
-
-    <div class = 'row mt-4'>
-    {% endif %}
-
+    
     {% endfor %}
     </div>
 </div>
@@ -56,7 +51,7 @@
         
     {% for f in fileList %}
     
-        <div class="col-md-2">
+        <div class="col-md-2 col-xs-4">
             <div class="thumbnail hvr-glow">
                 <a href="/download/{{currentDir}}>{{ f }}">
                 {% if ('.jpg' in  f) or ('.png' in f) %} 
@@ -77,10 +72,6 @@
             </div>
         </div>
     
-    {% if (loop.index is divisibleby 6) %}
-    </div>
-    <div class = 'row mt-4'>
-    {% endif %}
 
         
 
