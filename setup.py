@@ -32,7 +32,7 @@ if(len(favList)>3):
     favList=favList[0:3]
 
 currentDirectory='/'
-currentDirectory='/Users/rehan/Documents'
+#currentDirectory='/Users/rehan/Downloads'
 
 
 
@@ -51,11 +51,11 @@ def changeDirectory(path):
 
     pathC = path.split('>')
     
-    os.chdir(currentDirectory)
     if(pathC[0]==""):
         pathC.remove(pathC[0])
     
-    myPath = '/'.join(pathC)
+    myPath = currentDirectory+'/'+'/'.join(pathC)
+    print(myPath)
     try:
         os.chdir(myPath)
         ans=True
@@ -127,16 +127,16 @@ def homePage():
 @app.route('/download/<var>')
 def downloadFile(var):
     global currentDirectory
-    os.chdir(currentDirectory)
+    #os.chdir(currentDirectory)
 
     pathC = var.split('>')
     if(pathC[0]==''):
         pathC.remove(pathC[0])
     
     fPath = '/'.join(pathC)
-    fPath=currentDirectory+fPath
+    fPath=currentDirectory+'/'+fPath
     
-    if(hidden(fPath) or currentDirectory not in fPath):
+    if(hidden(fPath)):
         #FILE HIDDEN
         return redirect("/", code=100)
 
