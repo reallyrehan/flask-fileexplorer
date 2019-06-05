@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, send_file, redirect
 import os
+import sys
 
 app = Flask(__name__)
 
@@ -30,9 +31,8 @@ f.close()
 if(len(favList)>3):
     favList=favList[0:3]
 
-
-
-
+currentDirectory='/'
+currentDirectory='/Users/rehan/Documents'
 
 
 
@@ -47,18 +47,26 @@ def hidden(path):
 
 
 def changeDirectory(path):
-    pathC = path.split('>')
-    os.chdir('/')
+    global currentDirectory
 
+    pathC = path.split('>')
+    
+    os.chdir(currentDirectory)
     if(pathC[0]==""):
         pathC.remove(pathC[0])
     
     myPath = '/'.join(pathC)
     try:
         os.chdir(myPath)
-        return True
+        ans=True
+        if(currentDirectory not in os.getcwd()):
+            ans = False
     except:
-        return False
+        ans=False
+    
+    
+
+    return ans
     
 def getDirList():
 
@@ -109,7 +117,8 @@ def filePage(var):
 
 @app.route('/', methods=['GET'])
 def homePage():
-    os.chdir('/')
+    global currentDirectory
+    os.chdir(currentDirectory)
     dirList = getDirList()
     fileList=getFileList()
     return render_template('home.html',dirList=dirList,fileList=fileList,currentDir="",favList=favList)
@@ -117,15 +126,17 @@ def homePage():
 
 @app.route('/download/<var>')
 def downloadFile(var):
-    os.chdir('/')
+    global currentDirectory
+    os.chdir(currentDirectory)
 
     pathC = var.split('>')
     if(pathC[0]==''):
         pathC.remove(pathC[0])
     
     fPath = '/'.join(pathC)
-    fPath='/'+fPath
-    if(hidden(fPath)):
+    fPath=currentDirectory+fPath
+    
+    if(hidden(fPath) or currentDirectory not in fPath):
         #FILE HIDDEN
         return redirect("/", code=100)
 

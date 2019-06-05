@@ -8,4 +8,5 @@ Add Security Features - Added Hiding (Done)
 change to setup.py - Done
 Remove inline css to separate css file - Partially Done
 Add Favorites - Done
-Fix Mobile CSS 
+Fix Mobile CSS - Done
+Share only specific folder - Done
