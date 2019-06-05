@@ -32,7 +32,7 @@
     <div class = 'row mt-4'>
 
     {% for f in dirList %}
-        <div class="col-md-2 col-xs-4">
+        <div class="col-md-2 col-sm-4 col-6 mt-2">
                 <div class="thumbnail hvr-glow">
                     <a href="/{{currentDir}}>{{ f }}"><img src = '/static/folder2.jpg' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">{{f[:15]}}</p></a>
                 </div>
@@ -51,7 +51,7 @@
         
     {% for f in fileList %}
     
-        <div class="col-md-2 col-xs-4">
+        <div class="col-md-2 col-sm-4 col-6 mt-2">
             <div class="thumbnail hvr-glow">
                 <a href="/download/{{currentDir}}>{{ f }}">
                 {% if ('.jpg' in  f) or ('.png' in f) %} 
