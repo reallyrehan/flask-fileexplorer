@@ -10,3 +10,7 @@ Remove inline css to separate css file - Partially Done
 Add Favorites - Done
 Fix Mobile CSS - Done
 Share only specific folder - Done
+Take path from command line
+Add How to find IP Address (ISSUE)
+Test on Linux
+Test on Windows

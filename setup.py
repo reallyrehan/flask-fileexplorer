@@ -106,11 +106,13 @@ def filePage(var):
     if(changeDirectory(var)==False):
         #Invalid Directory
         print("Directory Doesn't Exist")
-        return redirect("/", code=302)
-
+        return render_template('404.html',errorCode=300,errorText='Invalid Directory Path')
      
-    dirList = getDirList()
-    fileList = getFileList()
+    try:
+        dirList = getDirList()
+        fileList = getFileList()
+    except:
+        return render_template('404.html',errorCode=200,errorText='Permission Denied')
 
 
     return render_template('home.html',dirList=dirList,fileList=fileList,currentDir=var,favList=favList)
@@ -138,7 +140,7 @@ def downloadFile(var):
     
     if(hidden(fPath)):
         #FILE HIDDEN
-        return redirect("/", code=100)
+        return render_template('404.html',errorCode=100,errorText='File Hidden')
 
 
     fName=pathC[len(pathC)-1]
@@ -146,8 +148,13 @@ def downloadFile(var):
     try:
         return send_file(fPath, attachment_filename=fName)
     except:
-        return redirect("PERMISSION DENIED", code=200)
+        return render_template('404.html',errorCode=200,errorText='Permission Denied')
 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html',errorCode=404,errorText='Page Not Found'), 404
 
 
 

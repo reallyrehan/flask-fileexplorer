@@ -35,4 +35,10 @@ Now, open terminal/command prompt in the flask-fileexplorer directory and run th
 This should start the Flask Server in your terminal window. You can access it by going to,
 - **localhost:5000** (on your server's browser)
 - **(IP Address of your Server):5000** (from any other browser on the same network)
+
+Here is how you can find out your PC's IP Address,
+
+- Mac 
+- Windows
+- Linux
   
