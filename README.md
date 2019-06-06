@@ -7,7 +7,7 @@ Server works on,
 - Linux
 - Mac
 
-I have written it in Python using the following web frameworks,
+I have written it in Python and tested it on Mac using the following web frameworks,
 
 **Frameworks**
 -
@@ -36,9 +36,39 @@ This should start the Flask Server in your terminal window. You can access it by
 - **localhost:5000** (on your server's browser)
 - **(IP Address of your Server):5000** (from any other browser on the same network)
 
-Here is how you can find out your PC's IP Address,
+For additional features,
 
-- Mac 
-- Windows
-- Linux
-  
+- **Password Protection**: Set a password in the config.json file.
+- **Hiding Folders**: Add paths of folders to hide in the config.json file as a list.
+- **Favorite Folders**: Add paths to add as favorites in the config.json file as a list.
+- **Share only Specific Folder**: Give a path to the Root Directory or leave it as default '/' to share the complete computer directory.
+
+
+
+## Issues ##
+
+- [x] Change File icons 
+- [ ] Implement Video Streaming Works Already
+- [ ] Implement Back/Forward Button 
+- [ ] Upload Button	
+- [ ] Add Download Folder option (Zip folder)
+- [x] Add Security Features Added Hiding ()
+- [x] change to setup.py 
+- [x] Remove inline css to separate css file Partially 
+- [x] Add Favorites 
+- [x] Fix Mobile CSS 
+- [x] Share only specific folder 
+- [ ] Take path from command line
+- [ ] Add How to find IP Address (ISSUE)
+- [ ] Test on Linux
+- [ ] Test on Windows
+- [x] Add Error Handling 
+- [x] Add Login Page Current Directory and Password 
+- [ ] Add Hidden Validation
+- [ ] Add Favorites Validation
+- [ ] ISSUE: Favorites doesnt work with Limited Directory Usage
+- [ ] Add Breadcrumb path
+- [ ] Back Button
+- [x] Add a proper Config file for all configrations hidden, favorites, login 
+- [ ] Add Exit Button
+- [ ] Describe how to get your own IP address for Mac, Windows, Linux
