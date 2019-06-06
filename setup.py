@@ -38,8 +38,9 @@ currentDirectory='/'
 
 
 def hidden(path):
+
     for i in hiddenList:
-        if i in path:
+        if i != '' and i not in path:
             return True
     
     return False

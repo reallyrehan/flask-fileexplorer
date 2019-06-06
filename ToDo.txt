@@ -14,3 +14,7 @@ Take path from command line
 Add How to find IP Address (ISSUE)
 Test on Linux
 Test on Windows
+Add Error Handling - Done
+Add Login Page - Current Directory and Password
+Add Hidden Validation
+Add Favorites Validation
