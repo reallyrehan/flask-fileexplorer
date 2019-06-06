@@ -4,15 +4,14 @@
 
 
 
-
 <div class='container'>
     
-
+   
     <div class = 'row mt-4'>
 
     {% for f in dirList %}
         <div class="col-md-2 col-sm-4 col-6 mt-2">
-                <div class="thumbnail hvr-glow">
+                <div class="thumbnail hvr-shadow">
                     <a href="/{{currentDir}}>{{ f }}"><img src = '/static/folder2.jpg' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">{{f[:15]}}</p></a>
                 </div>
         </div>
@@ -20,6 +19,9 @@
     {% endfor %}
     </div>
 </div>
+
+
+
 
 
 

@@ -19,3 +19,5 @@ Add Login Page - Current Directory and Password
 Add Hidden Validation
 Add Favorites Validation
 ISSUE: Favorites doesnt work with Limited Directory Usage
+Add Breadcrumb path
+Back Button
