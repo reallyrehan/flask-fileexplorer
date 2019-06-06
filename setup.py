@@ -32,7 +32,7 @@ if(len(favList)>3):
     favList=favList[0:3]
 
 currentDirectory='/'
-#currentDirectory='/Users/rehan/Downloads'
+currentDirectory='/Users/rehan/Downloads'
 
 
 
@@ -40,7 +40,7 @@ currentDirectory='/'
 def hidden(path):
 
     for i in hiddenList:
-        if i != '' and i not in path:
+        if i != '' and i in path:
             return True
     
     return False
