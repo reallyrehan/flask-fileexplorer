@@ -3,9 +3,10 @@ import os
 import sys
 import json
 
+
+
 app = Flask(__name__)
 app.secret_key = 'my_secret_key'
-#currentDirectory='/Users/rehan/Downloads'
 
 with open('config.json') as json_data_file:
     data = json.load(json_data_file)
@@ -14,12 +15,19 @@ favList = data["Favorites"]
 password = data["Password"]
 currentDirectory=data["rootDir"]
 
+osWindows = False #Not Windows
+if 'win' in sys.platform:
+    True
+    if(currentDirectory == "/"):
+        currentDirectory="C:\\"
+        
 
 if(len(favList)>3):
     favList=favList[0:3]
-
-for i in range(0,3):
-    favList[i]=favList[i].replace('/','>')
+    
+if(len(favList)>0):
+    for i in range(0,3):
+        favList[i]=favList[i].replace('/','>')
 
 
 
@@ -72,18 +80,25 @@ def hidden(path):
 
 
 def changeDirectory(path):
-    global currentDirectory
+    global currentDirectory, osWindows
 
     pathC = path.split('>')
     
     if(pathC[0]==""):
         pathC.remove(pathC[0])
     
-    myPath = currentDirectory+'/'+'/'.join(pathC)
-    #print(myPath)
+
+    if(osWindows):
+        myPath = currentDirectory+'\\'+'\\'.join(pathC)
+    else:
+        myPath = currentDirectory+'/'+'/'.join(pathC)
+
     try:
         os.chdir(myPath)
         ans=True
+        print(myPath)
+        print(os.getcwd())
+        print(currentDirectory)
         if(currentDirectory not in os.getcwd()):
             ans = False
     except:

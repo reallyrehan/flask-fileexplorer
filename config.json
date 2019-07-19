@@ -1,7 +1,8 @@
 {
-    "Hidden":       ["/Users/imran","/Users/rehan/Documents"],
-    "Favorites":    ["/Users/rehan/Downloads","/Users/rehan/Documents","/Users/rehan/Desktop"],
+    "Hidden":       [],
+    "Favorites":    [],
     "Password":     "",
-    "rootDir":   "/"
+    "rootDir":   "/" 
+
     
 }
