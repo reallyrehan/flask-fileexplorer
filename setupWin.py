@@ -13,21 +13,21 @@ with open('config.json') as json_data_file:
 hiddenList = data["Hidden"]
 favList = data["Favorites"]
 password = data["Password"]
+
+
 currentDirectory=data["rootDir"]
 
 osWindows = False #Not Windows
 if 'win' in sys.platform:
-    True
-    if(currentDirectory == "/"):
-        currentDirectory="C:\\"
-        
+    osWindows = True
 
 if(len(favList)>3):
     favList=favList[0:3]
     
 if(len(favList)>0):
-    for i in range(0,3):
-        favList[i]=favList[i].replace('/','>')
+    for i in range(0,len(favList)):
+        
+        favList[i]=favList[i].replace('\\','>') #CHANGE FOR MAC
 
 
 
@@ -84,23 +84,21 @@ def changeDirectory(path):
 
     pathC = path.split('>')
     
-    if(pathC[0]==""):
-        pathC.remove(pathC[0])
-    
+    print(pathC)
 
+    
     if(osWindows):
-        myPath = currentDirectory+'\\'+'\\'.join(pathC)
+        myPath = '//'.join(pathC)+'//'
     else:
-        myPath = currentDirectory+'/'+'/'.join(pathC)
+        myPath = '/'+'/'.join(pathC)
+
+    print(myPath)
 
     try:
         os.chdir(myPath)
         ans=True
-        print(myPath)
-        print(os.getcwd())
-        print(currentDirectory)
-        if(currentDirectory not in os.getcwd()):
-            ans = False
+        #if(currentDirectory not in os.getcwd()):
+        #    ans = False
     except:
         ans=False
     
@@ -144,7 +142,8 @@ def getFileList():
 def filePage(var):
     if('login' not in session):
         return redirect('/login/')
-    
+
+
     if(changeDirectory(var)==False):
         #Invalid Directory
         print("Directory Doesn't Exist")
@@ -161,21 +160,23 @@ def filePage(var):
 
 @app.route('/', methods=['GET'])
 def homePage():
-    global currentDirectory
+    global currentDirectory, osWindows
     if('login' not in session):
         return redirect('/login/')
     
+    if(currentDirectory == ""):
+        if osWindows:
+            return redirect('/C:')
+        else:
+            return redirect('/>')
+        
+        #REDIRECT TO UNTITLED OR C DRIVE FOR WINDOWS OR / FOR MAC
 
-
-    os.chdir(currentDirectory)
-    dirList = getDirList()
-    fileList=getFileList()
-    return render_template('home.html',dirList=dirList,fileList=fileList,currentDir="",favList=favList)
 
 
 @app.route('/download/<var>')
 def downloadFile(var):
-    global currentDirectory
+
     if('login' not in session):
         return redirect('/login/')
     
@@ -185,8 +186,8 @@ def downloadFile(var):
     if(pathC[0]==''):
         pathC.remove(pathC[0])
     
-    fPath = '/'.join(pathC)
-    fPath=currentDirectory+'/'+fPath
+    fPath = '//'.join(pathC)
+    
     
     if(hidden(fPath)):
         #FILE HIDDEN

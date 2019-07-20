@@ -61,7 +61,7 @@ For additional features,
 - [ ] Take path from command line
 - [ ] Add How to find IP Address (ISSUE)
 - [ ] Test on Linux
-- [ ] Test on Windows
+- [x] Test on Windows
 - [x] Add Error Handling 
 - [x] Add Login Page Current Directory and Password 
 - [ ] Add Hidden Validation

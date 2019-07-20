@@ -1,8 +1,8 @@
 {
     "Hidden":       [],
-    "Favorites":    [],
-    "Password":     "",
-    "rootDir":   "/" 
+    "Favorites":    ["C:\\Users\\reall\\Downloads"],
+    "Password":     "abc",
+    "rootDir":   "" 
 
     
 }
