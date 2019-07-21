@@ -72,3 +72,5 @@ For additional features,
 - [x] Add a proper Config file for all configrations hidden, favorites, login 
 - [ ] Add Exit Button
 - [ ] Describe how to get your own IP address for Mac, Windows, Linux
+- [ ] Add username and create a log file to track accesses and each executed instruction
+- [ ] Add homepage for selecting available Drives

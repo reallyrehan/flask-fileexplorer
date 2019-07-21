@@ -97,8 +97,8 @@ def changeDirectory(path):
     try:
         os.chdir(myPath)
         ans=True
-        #if(currentDirectory not in os.getcwd()):
-        #    ans = False
+        if(currentDirectory not in os.getcwd()):
+            ans = False
     except:
         ans=False
     
@@ -164,11 +164,14 @@ def homePage():
     if('login' not in session):
         return redirect('/login/')
     
-    if(currentDirectory == ""):
-        if osWindows:
+    if osWindows:
+        if(currentDirectory == ""):
             return redirect('/C:')
         else:
-            return redirect('/>')
+            cura='>'.join(currentDirectory.split('\\'))
+            return redirect('/'+cura)
+    else:
+        return redirect('/>')
         
         #REDIRECT TO UNTITLED OR C DRIVE FOR WINDOWS OR / FOR MAC
 
