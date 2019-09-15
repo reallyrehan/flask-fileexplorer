@@ -51,7 +51,7 @@ For additional features,
 - [ ] Implement Video Streaming Works Already
 - [ ] Implement Back/Forward Button 
 - [ ] Upload Button	
-- [ ] Add Download Folder option (Zip folder)
+- [x] Add Download Folder option (Zip folder)
 - [x] Add Security Features Added Hiding ()
 - [x] change to setup.py 
 - [x] Remove inline css to separate css file Partially 
@@ -62,6 +62,7 @@ For additional features,
 - [ ] Add How to find IP Address (ISSUE)
 - [ ] Test on Linux
 - [x] Test on Windows
+- [x] Test on Mac
 - [x] Add Error Handling 
 - [x] Add Login Page Current Directory and Password 
 - [ ] Add Hidden Validation
@@ -70,7 +71,7 @@ For additional features,
 - [ ] Add Breadcrumb path
 - [ ] Back Button
 - [x] Add a proper Config file for all configrations hidden, favorites, login 
-- [ ] Add Exit Button
+- [x] Add Exit Button
 - [ ] Describe how to get your own IP address for Mac, Windows, Linux
 - [ ] Add username and create a log file to track accesses and each executed instruction
-- [ ] Add homepage for selecting available Drives
+- [x] Add option for selecting available Drives

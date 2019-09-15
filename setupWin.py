@@ -2,10 +2,19 @@ from flask import Flask, render_template, request, send_file, redirect, session
 import os
 import sys
 import json
+from flask_fontawesome import FontAwesome
+import zipfile
+import win32api
+
 
 
 
 app = Flask(__name__)
+
+#FoNT AWESOME
+fa = FontAwesome(app)
+
+
 app.secret_key = 'my_secret_key'
 
 with open('config.json') as json_data_file:
@@ -13,6 +22,7 @@ with open('config.json') as json_data_file:
 hiddenList = data["Hidden"]
 favList = data["Favorites"]
 password = data["Password"]
+
 
 
 currentDirectory=data["rootDir"]
@@ -28,6 +38,39 @@ if(len(favList)>0):
     for i in range(0,len(favList)):
         
         favList[i]=favList[i].replace('\\','>') #CHANGE FOR MAC
+
+
+
+
+#WINDOWS FEATURE
+drives = win32api.GetLogicalDriveStrings()
+drives=drives.replace('\\','')
+drives = drives.split('\000')[:-1]
+drives.extend(favList)
+favList=drives
+
+
+
+
+
+
+
+
+
+
+
+def make_zipfile(output_filename, source_dir):
+    relroot = os.path.abspath(os.path.join(source_dir, os.pardir))
+    with zipfile.ZipFile(output_filename, "w", zipfile.ZIP_DEFLATED) as zip:
+        for root, dirs, files in os.walk(source_dir):
+            # add directory (needed for empty dirs)
+            zip.write(root, os.path.relpath(root, relroot))
+            for file in files:
+                filename = os.path.join(root, file)
+                if os.path.isfile(filename): # regular files only
+                    arcname = os.path.join(os.path.relpath(root, relroot), file)
+                    zip.write(filename, arcname)
+
 
 
 
@@ -155,7 +198,6 @@ def filePage(var):
     except:
         return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
 
-
     return render_template('home.html',dirList=dirList,fileList=fileList,currentDir=var,favList=favList)
 
 @app.route('/', methods=['GET'])
@@ -205,6 +247,36 @@ def downloadFile(var):
         return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
 
 
+
+@app.route('/downloadFolder/<var>')
+def downloadFolder(var):
+
+    if('login' not in session):
+        return redirect('/login/')
+    
+    #os.chdir(currentDirectory)
+
+    pathC = var.split('>')
+    if(pathC[0]==''):
+        pathC.remove(pathC[0])
+    
+    fPath = '//'.join(pathC)
+    
+    
+    if(hidden(fPath)):
+        #FILE HIDDEN
+        return render_template('404.html',errorCode=100,errorText='File Hidden',favList=favList)
+
+
+    fName=pathC[len(pathC)-1]+'.zip'
+    
+    try:
+        make_zipfile('C:\\Users\\reall\\Downloads\\temp\\abc.zip',os.getcwd())
+        return send_file('C:\\Users\\reall\\Downloads\\temp\\abc.zip', attachment_filename=fName)
+    except:
+        return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     if('login' not in session):
@@ -212,6 +284,12 @@ def page_not_found(e):
     
     # note that we set the 404 status explicitly
     return render_template('404.html',errorCode=404,errorText='Page Not Found',favList=favList), 404
+
+
+
+
+
+
 
 
 
