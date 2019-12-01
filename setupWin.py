@@ -292,27 +292,51 @@ def page_not_found(e):
 
 
 
-@app.route('/upload', methods = ['GET', 'POST'])
-def uploadFile():
-    
+@app.route('/upload/<var>', methods = ['GET', 'POST'])
+def uploadFile(var):
     if('login' not in session):
     
         return render_template('login.html')
+
+    text = ""
     if request.method == 'POST':
+        pathC = var.split('>')
+        if(pathC[0]==''):
+            pathC.remove(pathC[0])
+        
+        fPath = '//'.join(pathC)
+    
+    
+        if(hidden(fPath)):
+            #FILE HIDDEN
+            return render_template('404.html',errorCode=100,errorText='File Hidden',favList=favList)
+
 
         files = request.files.getlist('files[]') 
         fileNo=0
         for file in files:
-            print(file.filename + ' Uploaded')
-            if secure_filename(file.filename):
+            fupload = os.path.join(fPath,file.filename)
 
-                fupload = 'C:\\Users\\reall\\Downloads\\temp\\uploads\\'+file.filename
-                file.save(fupload)     
-                fileNo = fileNo +1
-      
+            if secure_filename(file.filename) and not os.path.exists(fupload):
+                try:
+                    file.save(fupload)    
+                    print(file.filename + ' Uploaded')
+                    text = text + file.filename + ' Uploaded<br>'
+ 
+                    fileNo = fileNo +1
+                except Exception as e:
+                    print(file.filename + ' Failed with Exception '+str(e))
+                    text = text + file.filename + ' Failed with Exception '+str(e) + '<br>'
+
+                    continue
+            else:
+                print(file.filename + ' Failed because File Already Exists or File Type Issue')
+                text = text + file.filename + ' Failed because File Already Exists or File Type not secure <br>'
+
+            
           
     fileNo2 = len(files)-fileNo
-    return render_template('uploadsuccess.html',text='Files Uploaded Successfully',fileNo=fileNo,fileNo2=fileNo2,favList=favList)
+    return render_template('uploadsuccess.html',text=text,fileNo=fileNo,fileNo2=fileNo2,favList=favList)
         
 
 

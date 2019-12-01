@@ -9,10 +9,15 @@
                     <h1>
                         <strong>{{fileNo}}</strong></h1>
                     <h3 class='text-muted'>
-                        {{text}}</h3>
+                            Files Uploaded Successfully</h3>
                     <div class="error-details lead">
                         {{fileNo2}} failed to upload.
                     </div>
+                    <div class="error-details lead">
+                            {% autoescape false %}
+                                {{text}}
+                            {% endautoescape %}
+                        </div>
                     <div style = "margin-top:15px; margin-bottom:15px;">
                         <a href="/" class="btn btn-info btn-lg" >
                             Take Me Home </a>

@@ -27,7 +27,7 @@
                   <ul class="navbar-nav ml-auto mt-2 mb-2 ">
                       {% if favList %}
 
-                      <form class="md-form" action = "/upload" method = "POST"  enctype = "multipart/form-data">
+                      <form class="md-form" action = "/upload/{{currentDir}}" method = "POST"  enctype = "multipart/form-data">
 
                         <input style="color:white;" class ="btn btn-sm "  type="file" name = "files[]" multiple="true" >
                         <input class="btn btn-sm mr-4" type = "submit"/>
