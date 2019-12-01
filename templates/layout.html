@@ -24,11 +24,18 @@
                   <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav ml-auto">
+                  <ul class="navbar-nav ml-auto mt-2 mb-2 ">
+                      {% if favList %}
 
-                              
+                      <form class="md-form" action = "/upload" method = "POST"  enctype = "multipart/form-data">
 
+                        <input style="color:white;" class ="btn btn-sm "  type="file" name = "files[]" multiple="true" >
+                        <input class="btn btn-sm mr-4" type = "submit"/>
                     
+                      </form>
+
+                      {% endif %}
+
                                
                     {% for f in favList %}
 
@@ -39,26 +46,27 @@
                     </li>
 
                     {% endfor %}
-
+                   
+                            
 
 
                     {% if favList %}
                     <li class="nav-item mr-4">
-                      <a class="nav-link active hvr-shadow" href="/downloadFolder/{{currentDir}}"> <span class="fa fa-download"></span> <span class="sr-only">(current)</span></a>
+                      <a class="nav-link active hvr-shadow" href="/downloadFolder/{{currentDir}}"> <span class="fa fa-download"></span><span class="sr-only">(current)</span></a>
                   </li>
+                  
                     <li class="nav-item">
                       <a class="nav-link active hvr-shadow" href="/logout/"> <span class="fa fa-sign-out-alt"></span> <span class="sr-only">(current)</span></a>
                   </li>
                   
                     {% endif %}
                     
-
-                    
+                   
                   </ul>
                 </div>
               </nav>
-
-
+              
+              
     {% block content %} {% endblock %}
 
 

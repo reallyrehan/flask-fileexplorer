@@ -48,9 +48,10 @@ For additional features,
 ## Issues ##
 
 - [x] Change File icons 
-- [ ] Implement Video Streaming Works Already
+- [x] Implement Video Streaming Works Already
 - [ ] Implement Back/Forward Button 
-- [ ] Upload Button	
+- [x] Upload Button	
+- [ ] Add Upload to specific folders
 - [x] Add Download Folder option (Zip folder)
 - [x] Add Security Features Added Hiding ()
 - [x] change to setup.py 
@@ -59,19 +60,19 @@ For additional features,
 - [x] Fix Mobile CSS 
 - [x] Share only specific folder 
 - [ ] Take path from command line
-- [ ] Add How to find IP Address (ISSUE)
+- [x] Add How to find IP Address (ISSUE)
 - [ ] Test on Linux
 - [x] Test on Windows
-- [x] Test on Mac
+- [ ] Test on Mac
 - [x] Add Error Handling 
 - [x] Add Login Page Current Directory and Password 
 - [ ] Add Hidden Validation
 - [ ] Add Favorites Validation
+- [ ] Add Upload Validation
 - [ ] ISSUE: Favorites doesnt work with Limited Directory Usage
 - [ ] Add Breadcrumb path
-- [ ] Back Button
 - [x] Add a proper Config file for all configrations hidden, favorites, login 
 - [x] Add Exit Button
-- [ ] Describe how to get your own IP address for Mac, Windows, Linux
+- [x] Describe how to get your own IP address for Mac, Windows, Linux
 - [ ] Add username and create a log file to track accesses and each executed instruction
 - [x] Add option for selecting available Drives

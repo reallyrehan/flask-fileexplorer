@@ -5,8 +5,13 @@ import json
 from flask_fontawesome import FontAwesome
 import zipfile
 import win32api
+from werkzeug import secure_filename
 
-
+import socket    
+hostname = socket.gethostname()    
+IPAddr = socket.gethostbyname(hostname)    
+print("Your Computer Name is: " + hostname)    
+print("Your Computer IP Address is: " + IPAddr)   
 
 
 app = Flask(__name__)
@@ -287,8 +292,28 @@ def page_not_found(e):
 
 
 
+@app.route('/upload', methods = ['GET', 'POST'])
+def uploadFile():
+    
+    if('login' not in session):
+    
+        return render_template('login.html')
+    if request.method == 'POST':
 
+        files = request.files.getlist('files[]') 
+        fileNo=0
+        for file in files:
+            print(file.filename + ' Uploaded')
+            if secure_filename(file.filename):
 
+                fupload = 'C:\\Users\\reall\\Downloads\\temp\\uploads\\'+file.filename
+                file.save(fupload)     
+                fileNo = fileNo +1
+      
+          
+    fileNo2 = len(files)-fileNo
+    return render_template('uploadsuccess.html',text='Files Uploaded Successfully',fileNo=fileNo,fileNo2=fileNo2,favList=favList)
+        
 
 
 
