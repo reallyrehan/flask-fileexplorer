@@ -7,14 +7,25 @@
    
     <div class = 'row mt-4'>
 
-    {% for f in dirList %}
+
+		{% autoescape false %}
+		{{dirList}}
+		
+		{% endautoescape %}
+
+
+    <!-- {% for f in dirList %}
         <div class="col-md-2 col-sm-4 col-6 mt-2">
                 <div class="thumbnail hvr-shadow">
-                    <a href="/{{currentDir}}>{{ f }}"><img src = '/static/folder2.jpg' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">{{f[:15]}}</p></a>
+                    <a href="/files/{{currentDir}}/{{ f }}"><img src = '/static/folder5.png' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">{{f[:15]}}</p></a>
                 </div>
         </div>
     
-    {% endfor %}
+    {% endfor %} -->
+
+
+
+
     </div>
 </div>
 
@@ -32,16 +43,16 @@
     
         <div class="col-md-2 col-sm-4 col-6 mt-2">
             <div class="thumbnail hvr-glow">
-                <a href="/download/{{currentDir}}>{{ f }}">
+                <a href="/download/{{currentDir}}/{{ f }}">
                 {% if ('.jpg' in  f) or ('.png' in f) %} 
-                    <img src = '/static/image.png' class='img-thumbnail' style="border:0px"/>
+                    <img src = '/static/photo-icon.png' class='img-thumbnail' style="border:0px"/>
                 {% elif ('.mp4' in f) %} 
-                    <img src = '/static/mp4.png' class='img-thumbnail' style="border:0px"/>
+                    <img src = '/static/audio-icon.png' class='img-thumbnail' style="border:0px"/>
                 {% elif ('.mp3' in f) %} 
-                    <img src = '/static/mp3.png' class='img-thumbnail' style="border:0px"/>
+                    <img src = '/static/audio-icon.png' class='img-thumbnail' style="border:0px"/>
 
                 {% else %} 
-                    <img src = '/static/file-icon.png' class='img-thumbnail' style="border:0px"/>
+                    <img src = '/static/file-test2.png' class='img-thumbnail' style="border:0px"/>
                 {% endif %}
 
                         <p style="color:black; text-align:center;">{{f[:15]}}</p>

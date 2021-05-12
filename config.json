@@ -1,6 +1,6 @@
 {
-    "Hidden":       [],
-    "Favorites":    [],
+    "Hidden":       ["Users/rehanahmed/Downloads"],
+    "Favorites":    ["Users/rehanahmed/Downloads","Users/rehanahmed/Documents"],
     "Password":     "",
     "rootDir":   "" 
 

@@ -164,8 +164,11 @@ def getDirList():
     for i in dList:
         if(hidden(curDir+'/'+i)==False):
             finalList.append(i)
+            
 
     return(finalList)
+
+
 
 
 def getFileList():
