@@ -1,8 +1,7 @@
 - [x] Change File icons 
-- [ ] Implement Video Streaming Works Already
-- [ ] Implement Back/Forward Button 
+- [x] Implement Video Streaming Works Already
 - [ ] Upload Button	
-- [ ] Add Download Folder option (Zip folder)
+- [x] Add Download Folder option (Zip folder) (issue: deletion of created zip)
 - [x] Add Security Features Added Hiding ()
 - [x] change to setup.py 
 - [x] Remove inline css to separate css file Partially 
@@ -22,3 +21,6 @@
 - [ ] Back Button
 - [x] Add a proper Config file for all configrations hidden, favorites, login 
 - [ ] Add Exit Button
+- [ ] Better Security
+- [ ] Fix limited file structure sharing
+- [ ] Add requirments.txt

@@ -25,6 +25,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav ml-auto mt-2 mb-2 ">
+
+                    <button class='btn btn-light' id = "view0_button" {{view0_button}}><i class="fas fa-th-large"></i></button >
+                    <button class='btn btn-light' id = "view1_button" {{view1_button}}><i class="fas fa-list"></i></button>
+                
+
                       {% if favList %}
 
                       <form class="md-form" action = "/upload/{{currentDir}}" method = "POST"  enctype = "multipart/form-data">
@@ -34,6 +39,7 @@
                     
                       </form>
 
+                
                       {% endif %}
 
                                
@@ -75,11 +81,76 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 <script>
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+
+
+
+
+
+$(function () {
+
+ 
+
+
+
+
+
+			$('#view0_button').click(function () {
+     
+            $('#view1_container').css('display', 'none');
+				    $('#view0_container').css('display', 'block');
+            $('#view0_button').prop("disabled",true);
+            $('#view1_button').prop("disabled",false);
+
+
+            const Http = new XMLHttpRequest();
+            const url='/changeView?view=0';
+            Http.open("GET", url);
+            Http.send();
+
+  //           $.ajax({url: "/calc", success: function(result){
+  // }});
+
+        // $.ajax({
+				// 	url: 'localhost:5000/api/changeView?view=0',
+
+				// 	success: function (data) {
+        //     $('#view1_container').css('display', 'none');
+				//     $('#view0_container').css('display', 'block');
+				// 	},
+				// });
+        
+			});
+      $('#view1_button').click(function () {
+        $('#view0_container').css('display', 'none');
+				$('#view1_container').css('display', 'block');
+        $('#view1_button').prop("disabled",true);
+        $('#view0_button').prop("disabled",false);
+
+
+        const Http = new XMLHttpRequest();
+        const url='/changeView?view=1';
+        Http.open("GET", url);
+        Http.send();
+        // $.ajax({
+				// 	url: '/api/changeView?view=1',
+
+				// 	success: function (data) {
+        //     $('#view1_container').css('display', 'none');
+				//     $('#view0_container').css('display', 'block');
+				// 	},
+
+				// });
+			});
+});
+
+
 </script>
 </body>
 
