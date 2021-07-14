@@ -3,7 +3,7 @@
 A file explorer that works over local area network (Wi-Fi/Ethernet) using Flask server. You can explore a computer's complete directory and download any file. Moreover, it also lets you stream videos or audio files if your browser supports it.
 
 Server works on,
-- Windows
+- Windows 
 - Linux
 - Mac
 
@@ -30,7 +30,7 @@ Make sure you have flask installed. You can use the following command to install
     
 Now, open terminal/command prompt in the flask-fileexplorer directory and run the setup.y file by using the following command,
 
-    python setup.py
+    python setupMac.py
     
 This should start the Flask Server in your terminal window. You can access it by going to,
 - **localhost:5000** (on your server's browser)
