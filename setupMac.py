@@ -41,7 +41,7 @@ osWindows = False #Not Windows
 
 default_view = 0
 
-tp_dict = {'image':'photo-icon.png','audio':'audio-icon.png'}
+tp_dict = {'image':'photo-icon.png','audio':'audio-icon.png','video':'video-icon.png'}
 
 # if 'win' in sys.platform:
 #     # import win32api
@@ -309,7 +309,7 @@ def getDirList(view,visibility):
             elif view == 1:
                 try:
                     dir_stats = os.stat(i)
-                    dt = dText_original.replace("{{f}}",i).replace("{{f_url}}",i).replace('{{currentDir}}',curDir).replace('{{f_complete}}',i).replace("{{dtc}}",datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{dtm}}",datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{size}}",size(dir_stats.st_size)).replace('{{image}}',image)
+                    dt = dText_original.replace("{{f}}",i).replace("{{f_url}}",i).replace('{{currentDir}}',curDir).replace('{{f_complete}}',i).replace("{{dtc}}",datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{dtm}}",datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{size}}","---").replace('{{image}}',image)
                     dText += dt[:]
                 except:
                     pass
