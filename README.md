@@ -1,4 +1,4 @@
-# File Explorer Server #
+# WiFile #
 
 A file explorer that works over local area network (Wi-Fi/Ethernet) using Flask server. You can explore a computer's complete directory and download any file. Moreover, it also lets you stream videos or audio files if your browser supports it.
 
