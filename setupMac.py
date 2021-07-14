@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 from hurry.filesize import size
 from datetime import datetime
 import filetype
+from flask_qrcode import QRcode
 
 
 from urllib.parse import unquote
@@ -23,6 +24,9 @@ app = Flask(__name__)
 
 #FoNT AWESOME
 fa = FontAwesome(app)
+
+qrcode = QRcode(app)
+
 
 
 app.secret_key = 'my_secret_key'
@@ -213,7 +217,7 @@ def changeView():
 def getDirList(view,visibility):
     # print(default_view)
 
-    global maxNameLength,tp_dict
+    global maxNameLength,tp_dict,hostname
     
     if view == 0:
         dText = '<div id ="view0_container" class = "container" __DISPLAY__  ><div class = "row mt-4"><h5></h5></div> <hr><div class = "row mt-4">'
@@ -221,13 +225,18 @@ def getDirList(view,visibility):
 
         dText_original = """
             <div class="col-md-2 col-sm-4 col-6 mt-2">
+
+            <a style = "display:block;" id = "qrphone" href = "/qr/{{currentDir}}/{{f_url}}"><img src = "/static/phone-download.png" style = "width:15px;height:15px;"></a>
+
             <div class="thumbnail hvr-shadow">
+                
 
                 <a href="/files/{{currentDir}}/{{f_url}}"><img src = '/static/{{image}}' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">
                         <p style="color:black;" data-toggle="tooltip" data-placement="right" title="{{f_complete}}">
     {{f}}
     </p>
-                </p></a>
+                </p></a>                
+
                 
             </div>
             </div>
@@ -304,12 +313,12 @@ def getDirList(view,visibility):
                 else:
                     dots = ""
 
-                dt = dText_original.replace("{{f}}",i[0:maxNameLength]+dots).replace("{{f_url}}",i).replace('{{currentDir}}',curDir).replace('{{f_complete}}',i).replace('{{image}}',image)
+                dt = dText_original.replace("{{f}}",i[0:maxNameLength]+dots).replace("{{f_url}}",i).replace('{{currentDir}}',curDir).replace('{{f_complete}}',i).replace('{{image}}',image).replace('display:block','display:none')
                 dText += dt[:]
             elif view == 1:
                 try:
                     dir_stats = os.stat(i)
-                    dt = dText_original.replace("{{f}}",i).replace("{{f_url}}",i).replace('{{currentDir}}',curDir).replace('{{f_complete}}',i).replace("{{dtc}}",datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{dtm}}",datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{size}}","---").replace('{{image}}',image)
+                    dt = dText_original.replace("{{f}}",i).replace("{{f_url}}",i).replace('{{currentDir}}',curDir).replace('{{f_complete}}',i).replace("{{dtc}}",datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{dtm}}",datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{size}}","---").replace('{{image}}',image).replace('display:block','display:none')
                     dText += dt[:]
                 except:
                     pass
@@ -600,8 +609,39 @@ def uploadFile(var):
     return render_template('uploadsuccess.html',text=text,fileNo=fileNo,fileNo2=fileNo2,favList=favList)
         
 
+@app.route('/qr/<path:var>')
+def qrFile(var):
+    global hostname
+
+    if('login' not in session):
+        return redirect('/login/')
+    
+    #os.chdir(currentDirectory)
+
+    
+    pathC = unquote(var).split('/')
+    if(pathC[0]==''):
+        pathC.remove(pathC[0])
+    
+    fPath = '/'+currentDirectory+'//'.join(pathC)
+
+    
+    
+    if(hidden(fPath)):
+        #FILE HIDDEN
+        return render_template('404.html',errorCode=100,errorText='File Hidden',favList=favList)
+
+
+    fName=pathC[len(pathC)-1]
+    #print(fPath)
+    # print(fPath)
+    qr_text = 'http://'+hostname+"//download//"+fPath
+
+    print(qr_text)
+    return send_file(qrcode(qr_text, mode="raw"), mimetype="image/png")
+    return send_file(fPath, attachment_filename=fName)
 
 
 
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0',debug=False)
+    app.run(host= '0.0.0.0',debug=True,port=80)
