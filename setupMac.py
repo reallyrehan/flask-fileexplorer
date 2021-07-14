@@ -226,7 +226,7 @@ def getDirList(view,visibility):
         dText_original = """
             <div class="col-md-2 col-sm-4 col-6 mt-2">
 
-            <a style = "display:block;" id = "qrphone" href = "/qr/{{currentDir}}/{{f_url}}"><img src = "/static/phone-download.png" style = "width:15px;height:15px;"></a>
+            <a data-toggle="tooltip" data-placement="left" title="Send to Phone" style = "display:block;" id = "qrphone" href = "/qr/{{currentDir}}/{{f_url}}"><img src = "/static/phone-download.png" style = "width:15px;height:15px;"></a>
 
             <div class="thumbnail hvr-shadow">
                 
