@@ -3,7 +3,7 @@
 A file explorer that works over local area network (Wi-Fi/Ethernet) using Flask server. You can explore a computer's complete directory and download any file. Moreover, it also lets you stream videos or audio files if your browser supports it.
 
 Server works on,
-- Windows 
+- Windows
 - Linux
 - Mac
 
@@ -16,7 +16,7 @@ I have written it in Python and tested it on Mac using the following web framewo
 
 Flask has been used to run the server and serve up the html pages. Meanwhile, Bootstrap has been used to show the Folders and the Files. To open any folder, just click on it and to download/stream any file, just click on it.
 
-![Demo](demo.png)
+![Demo](static/demo.png)
 
 **How to Run**
 -
@@ -58,12 +58,12 @@ For additional features,
 - [x] Remove inline css to separate css file Partially 
 - [x] Add Favorites 
 - [x] Fix Mobile CSS 
-- [x] Share only specific folder 
+- [ ] Share only specific folder 
 - [ ] Take path from command line
 - [x] Add How to find IP Address (ISSUE)
 - [ ] Test on Linux
-- [x] Test on Windows
-- [ ] Test on Mac
+- [ ] Test on Windows
+- [x] Test on Mac
 - [x] Add Error Handling 
 - [x] Add Login Page Current Directory and Password 
 - [ ] Add Hidden Validation
@@ -76,3 +76,5 @@ For additional features,
 - [x] Describe how to get your own IP address for Mac, Windows, Linux
 - [ ] Add username and create a log file to track accesses and each executed instruction
 - [x] Add option for selecting available Drives
+- [ ] Add requirments.txt
+- [ ] Better Security

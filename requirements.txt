@@ -1,0 +1,10 @@
+certifi==2021.5.30
+click==8.0.1
+filetype==1.0.7
+Flask==2.0.1
+Flask-FontAwesome==0.1.5
+hurry.filesize==0.9
+itsdangerous==2.0.1
+Jinja2==3.0.1
+MarkupSafe==2.0.1
+Werkzeug==2.0.1
