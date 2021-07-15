@@ -220,7 +220,7 @@ def getDirList(view,visibility):
     global maxNameLength,tp_dict,hostname
     
     if view == 0:
-        dText = '<div id ="view0_container" class = "container" __DISPLAY__  ><div class = "row mt-4"><h5></h5></div> <hr><div class = "row mt-4">'
+        dText = '<div id ="view0_container" class = "container" __DISPLAY__  ><div class = "row"><h5></h5></div> <div class = "row">'
 
 
         dText_original = """
@@ -249,12 +249,12 @@ def getDirList(view,visibility):
 
 <div id ="view1_container" class = "container" __DISPLAY__ >
         <div class = "row mt-4">
-            <div class="col-3 mb-2" style=" text-align:center;" ><b>Name</b></div>
-            <div class="col-3" style=" text-align:center;" ><b>Created Time</b></div>
-            <div class="col-3" style=" text-align:center;"><b>Modified Time</b></div>
-            <div class="col-3" style=" text-align:center;"><b>Size</b></div>
+            <div class="col-3 mb-2" style=" text-align:center;" ><b>Name</b><hr></div>
+            <div class="col-3" style=" text-align:center;" ><b>Created Time</b><hr></div>
+            <div class="col-3" style=" text-align:center;"><b>Modified Time</b><hr></div>
+            <div class="col-3" style=" text-align:center;"><b>Size</b><hr></div>
 </div>
-<hr>
+
 <div class = "row">
         """
         dText_original = """
@@ -427,7 +427,13 @@ def filePage(var):
     except:
         return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
     
-    return render_template('home.html',dirList=dirList,currentDir=var,favList=favList,view0_button=var1,view1_button = var2)
+    cList = var.split('/')
+    var_path = '<a href = "/files/"><img src = "/static/root.png" style = "height:25px;width: 25px;">&nbsp;</a>'
+    for c in range(0,len(cList)):
+        var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
+
+
+    return render_template('home.html',dirList=dirList,currentDir=var,favList=favList,view0_button=var1,view1_button = var2,currentDir_path=var_path)
 
 
 @app.route('/files/', methods=['GET'])
@@ -463,7 +469,14 @@ def filePageRoot():
     except:
         return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
 
-    return render_template('home.html',dirList=dirList,currentDir=var,favList=favList,view0_button=var1,view1_button = var2)
+    cList = var.split('/')
+    var_path = '<a href = "/files/"><img src = "/static/root.png" style = "height:25px;width: 25px;">&nbsp;</a>'
+    for c in range(0,len(cList)):
+        var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
+
+
+
+    return render_template('home.html',dirList=dirList,currentDir=var,favList=favList,view0_button=var1,view1_button = var2,currentDir_path=var_path)
 
 
 @app.route('/', methods=['GET'])
@@ -559,9 +572,9 @@ def page_not_found(e):
     return render_template('404.html',errorCode=404,errorText='Page Not Found',favList=favList), 404
 
 
-
+@app.route('/upload/', methods = ['GET', 'POST'])
 @app.route('/upload/<path:var>', methods = ['GET', 'POST'])
-def uploadFile(var):
+def uploadFile(var=""):
 
     if('login' not in session):
     
@@ -607,6 +620,10 @@ def uploadFile(var):
           
     fileNo2 = len(files)-fileNo
     return render_template('uploadsuccess.html',text=text,fileNo=fileNo,fileNo2=fileNo2,favList=favList)
+
+
+
+    
         
 
 @app.route('/qr/<path:var>')

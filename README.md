@@ -61,6 +61,7 @@ For additional features,
 - [x] Remove inline css to separate css file Partially 
 - [x] Add Favorites 
 - [x] Fix Mobile CSS 
+- [ ] File drop to upload
 - [ ] Share only specific folder 
 - [ ] Take path from command line
 - [x] Add How to find IP Address (ISSUE)
@@ -73,7 +74,7 @@ For additional features,
 - [ ] Add Favorites Validation
 - [ ] Add Upload Validation
 - [ ] ISSUE: Favorites doesnt work with Limited Directory Usage
-- [ ] Add Breadcrumb path
+- [x] Add Breadcrumb path
 - [x] Add a proper Config file for all configrations hidden, favorites, login 
 - [x] Add Exit Button
 - [x] Describe how to get your own IP address for Mac, Windows, Linux
@@ -82,3 +83,4 @@ For additional features,
 - [ ] Add requirments.txt
 - [ ] Better Security
 - [x] QR Code File Download
+- [ ] Performance Improvement by converting Python directory+file code to Jinja
