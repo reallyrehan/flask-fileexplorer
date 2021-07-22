@@ -3,11 +3,11 @@
 A file explorer that works over local area network (Wi-Fi/Ethernet) using Flask server. You can explore a computer's complete directory and download any file. Moreover, it also lets you stream videos or audio files if your browser supports it.
 
 Server works on,
-- Windows (Coming Soon)
-- Linux
+- Windows
 - Mac
+- Linux (Not Tested)
 
-I have written it in Python and tested it on Mac using the following web frameworks,
+It is written in Python and tested it on Mac using the following web frameworks,
 
 **Frameworks**
 -
@@ -28,16 +28,22 @@ Make sure you have flask installed. You can use the following command to install
 
     pip install -r requirements.txt
     
-Now, open terminal/command prompt in the flask-fileexplorer directory and run the setup.y file by using the following command,
+Now, open terminal/command prompt in the flask-fileexplorer directory and run the setup.py file by using the following command,
 
-For Mac,
-    python setupMac.py
-For Windows,
-    python setupWin.py (Coming Soon)
-    
-This should start the Flask Server in your terminal window. You can access it by going to,
-- **localhost:5000** (on your server's browser)
-- **(IP Address of your Server):5000** (from any other browser on the same network)
+    python setup.py
+
+You might have to configure the [config.json](config.json) file with your paths,
+
+Example for Mac,
+    "Favorites":    ["Users/rehanahmed/Downloads","Users/rehanahmed/Documents"],
+
+Example for Windows,
+    "Favorites":    ["C://Users//Administrator//Documents","C://Users//Administrator//Downloads"],
+
+
+This should start the Flask Server in your terminal window. By default, it is run on port 80. You can access it by going to,
+- **localhost** (on your server's browser)
+- **(IP Address of your Server)** (from any other browser on the same network)
 
 For additional features,
 
@@ -45,8 +51,6 @@ For additional features,
 - **Hiding Folders**: Add paths of folders to hide in the config.json file as a list.
 - **Favorite Folders**: Add paths to add as favorites in the config.json file as a list.
 - **Share only Specific Folder**: Give a path to the Root Directory or leave it as default '/' to share the complete computer directory.
-
-
 
 ## Issues ##
 

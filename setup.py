@@ -47,22 +47,22 @@ default_view = 0
 
 tp_dict = {'image':'photo-icon.png','audio':'audio-icon.png','video':'video-icon.png'}
 
-# if 'win' in sys.platform:
-#     # import win32api
-#     osWindows = True
-#     #WINDOWS FEATURE
-#     drives = win32api.GetLogicalDriveStrings()
-#     drives=drives.replace('\\','')
-#     drives = drives.split('\000')[:-1]
-#     drives.extend(favList)
-#     favList=drives
+if 'win32' in sys.platform or 'win64' in sys.platform:
+    # import win32api
+    osWindows = True
+    #WINDOWS FEATURE
+    # drives = win32api.GetLogicalDriveStrings()
+    # drives=drives.replace('\\','')
+    # drives = drives.split('\000')[:-1]
+    # drives.extend(favList)
+    # favList=drives
 
 
 
 if(len(favList)>3):
     favList=favList[0:3]
     
-print(favList)
+# print(favList)
 # if(len(favList)>0):
 #     for i in range(0,len(favList)):
         
@@ -77,11 +77,6 @@ print(favList)
 # drives = drives.split('\000')[:-1]
 # drives.extend(favList)
 # favList=drives
-
-
-
-
-
 
 
 
@@ -158,7 +153,6 @@ def changeDirectory(path):
     pathC = path.split('/')
     # print(path)
 
-    
     if(osWindows):
         myPath = '//'.join(pathC)+'//'
     else:
@@ -166,6 +160,8 @@ def changeDirectory(path):
 
     # print(myPath)
     myPath = unquote(myPath)
+    # print("HELLO")
+    # print(myPath)
 
     try:
         os.chdir(myPath)
@@ -396,16 +392,16 @@ def getFileList():
 
 
 
-
+@app.route('/files/', methods=['GET'])
 @app.route('/files/<path:var>', methods=['GET'])
-def filePage(var):
+def filePage(var = ""):
     global default_view
 
 
     if('login' not in session):
         return redirect('/login/')
 
-
+    # print(var)
     if(changeDirectory(var)==False):
         #Invalid Directory
         print("Directory Doesn't Exist")
@@ -428,56 +424,73 @@ def filePage(var):
     except:
         return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
     
-    cList = var.split('/')
-    var_path = '<a href = "/files/"><img src = "/static/root.png" style = "height:25px;width: 25px;">&nbsp;</a>'
-    for c in range(0,len(cList)):
-        var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
 
 
-    return render_template('home.html',dirList=dirList,currentDir=var,favList=favList,view0_button=var1,view1_button = var2,currentDir_path=var_path)
-
-
-@app.route('/files/', methods=['GET'])
-def filePageRoot():
-    global default_view
-
-
-    var = ""
-
-    if('login' not in session):
-        return redirect('/login/')
-
-
-    if(changeDirectory(var)==False):
-        #Invalid Directory
-        print("Directory Doesn't Exist")
-        return render_template('404.html',errorCode=300,errorText='Invalid Directory Path',favList=favList)
-    
-    
-    if default_view == 1:
-        dirList_1 = getDirList(0,True)
-        dirList_2 = getDirList(1,False)
-        var1,var2 = "","DISABLED"
+    if osWindows:
+        cList = var.split('//')
+        var_path = '<a style = "color:black;"href = "/files/'+cList[0]+'">'+unquote(cList[0])+'</a>'
+        for c in range(1,len(cList)):
+            var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
+        
     else:
-        dirList_1 = getDirList(1,True)
-        dirList_2 = getDirList(0,False)
-        var1,var2 = "DISABLED",""
-
-    dirList = dirList_1+dirList_2
-    try:
-        pass
-        # fileList = getFileList()
-    except:
-        return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
-
-    cList = var.split('/')
-    var_path = '<a href = "/files/"><img src = "/static/root.png" style = "height:25px;width: 25px;">&nbsp;</a>'
-    for c in range(0,len(cList)):
-        var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
+        cList = var.split('/')
+        var_path = '<a href = "/files/"><img src = "/static/root.png" style = "height:25px;width: 25px;">&nbsp;</a>'
+        for c in range(0,len(cList)):
+            var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
 
 
 
     return render_template('home.html',dirList=dirList,currentDir=var,favList=favList,view0_button=var1,view1_button = var2,currentDir_path=var_path)
+
+
+# @app.route('/files/', methods=['GET'])
+# def filePageRoot():
+#     global default_view
+
+
+#     var = ""
+
+#     if('login' not in session):
+#         return redirect('/login/')
+
+
+#     if(changeDirectory(var)==False):
+#         #Invalid Directory
+#         print("Directory Doesn't Exist")
+#         return render_template('404.html',errorCode=300,errorText='Invalid Directory Path',favList=favList)
+    
+    
+#     if default_view == 1:
+#         dirList_1 = getDirList(0,True)
+#         dirList_2 = getDirList(1,False)
+#         var1,var2 = "","DISABLED"
+#     else:
+#         dirList_1 = getDirList(1,True)
+#         dirList_2 = getDirList(0,False)
+#         var1,var2 = "DISABLED",""
+
+#     dirList = dirList_1+dirList_2
+#     try:
+#         pass
+#         # fileList = getFileList()
+#     except:
+#         return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
+
+#     if osWindows:
+#         cList = var.split('/')
+#         var_path = '<a href = "/files/"><img src = "/static/root.png" style = "height:25px;width: 25px;">'+cList[0]+'</a>'
+#         for c in range(1,len(cList)):
+#             var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
+
+#     else:
+#         cList = var.split('/')
+#         var_path = '<a href = "/files/"><img src = "/static/root.png" style = "height:25px;width: 25px;">&nbsp;</a>'
+#         for c in range(0,len(cList)):
+#             var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
+
+
+
+#     return render_template('home.html',dirList=dirList,currentDir=var,favList=favList,view0_button=var1,view1_button = var2,currentDir_path=var_path)
 
 
 @app.route('/', methods=['GET'])
@@ -490,7 +503,7 @@ def homePage():
     
     if osWindows:
         if(currentDirectory == ""):
-            return redirect('/C:')
+            return redirect('/files/C:')
         else:
             # cura = currentDirectory
 
@@ -516,9 +529,11 @@ def downloadFile(var):
     if(pathC[0]==''):
         pathC.remove(pathC[0])
     
-    fPath = '/'+currentDirectory+'//'.join(pathC)
+    if osWindows:
+        fPath = currentDirectory+'//'.join(pathC)
+    else:
+        fPath = '/'+currentDirectory+'//'.join(pathC)
 
-    
     
     if(hidden(fPath)):
         #FILE HIDDEN
@@ -527,9 +542,9 @@ def downloadFile(var):
 
     fName=pathC[len(pathC)-1]
     #print(fPath)
-    return send_file(fPath, attachment_filename=fName)
+    return send_file(fPath, download_name=fName)
     try:
-        return send_file(fPath, attachment_filename=fName)
+        return send_file(fPath, download_name=fName)
     except:
         return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
 
@@ -547,7 +562,10 @@ def downloadFolder(var):
     if(pathC[0]==''):
         pathC.remove(pathC[0])
     
-    fPath = '/'+currentDirectory+'//'.join(pathC)
+    if osWindows:
+        fPath = currentDirectory+'//'.join(pathC)
+    else:
+        fPath = '/'+currentDirectory+'//'.join(pathC)
     
     
     if(hidden(fPath)):
@@ -588,7 +606,10 @@ def uploadFile(var=""):
         if(pathC[0]==''):
             pathC.remove(pathC[0])
         
-        fPath = '/'+currentDirectory+'//'.join(pathC)
+        if osWindows:
+            fPath = currentDirectory+'//'.join(pathC)
+        else:
+            fPath = '/'+currentDirectory+'//'.join(pathC)
     
     
         if(hidden(fPath)):
@@ -641,7 +662,11 @@ def qrFile(var):
     if(pathC[0]==''):
         pathC.remove(pathC[0])
     
-    fPath = '/'+currentDirectory+'//'.join(pathC)
+
+    if osWindows:
+        fPath = currentDirectory+'//'.join(pathC)
+    else:
+        fPath = '/'+currentDirectory+'//'.join(pathC)
 
     
     
