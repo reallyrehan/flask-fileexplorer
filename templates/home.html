@@ -38,6 +38,54 @@
 </div> -->
 
 
+<hr>
+
+<div id ="view0_container" class = "container"   ><div class = "row"><h5></h5></div> <div class = "row">
+
+
+<div class="col-md-2 col-sm-4 col-6 mt-2">
+
+    <a data-toggle="tooltip" data-placement="left" title="Send to Phone" style = "display:block;" id = "qrphone" href = "/qr/{{currentDir}}/{{f_url}}"><img src = "/static/phone-download.png" style = "width:15px;height:15px;"></a>
+
+    <div class="thumbnail hvr-shadow">
+        
+
+        <a href="/files/{{currentDir}}/{{f_url}}"><img src = '/static/{{image}}' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">
+                <p style="color:black;" data-toggle="tooltip" data-placement="right" title="{{f_complete}}">
+{{f}}
+</p>
+        </p></a>                
+
+        
+    </div>
+    </div>
+
+</div><div class = "row mt-4"><h5></h5></div> <hr><div class = "row mt-4">
+
+    <div class="col-md-2 col-sm-4 col-6 mt-2">
+
+        <a data-toggle="tooltip" data-placement="left" title="Send to Phone" style = "display:block;" id = "qrphone" href = "/qr/{{currentDir}}/{{f_url}}"><img src = "/static/phone-download.png" style = "width:15px;height:15px;"></a>
+    
+        <div class="thumbnail hvr-shadow">
+            
+    
+            <a href="/files/{{currentDir}}/{{f_url}}"><img src = '/static/{{image}}' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">
+                    <p style="color:black;" data-toggle="tooltip" data-placement="right" title="{{f_complete}}">
+    {{f}}
+    </p>
+            </p></a>                
+    
+            
+        </div>
+        </div>
+    </div></div> <hr>
+
+
+
+
+
+<hr>
+
 		{% autoescape false %}
 		{{dirList}}
 		

@@ -304,6 +304,7 @@ def getDirList(view,visibility):
     # print(os.stat(os.getcwd()))
 
 
+
     for i in dList:
         if(hidden(curDir+'/'+i)==False):
             image = 'folder5.png'
