@@ -1,9 +1,17 @@
-# WiFile #
+# WiFile # 
 
 A file explorer that works over local area network (Wi-Fi/Ethernet) using Flask server. You can explore a computer's complete directory and download any file. Moreover, it also lets you stream videos or audio files if your browser supports it.
 
+**New Features** 🎉
+-
+- Significant performance improvements - incorporated jinja for dynamic output generation 🔥
+- Added QR Code Sharing - share files using QR codes 📲
+- Folder Breadcrumbs - easily navigate back and forth between folders 🍞
+
+**Description**
+-
 Server works on,
-- Windows
+- Windows 
 - Mac
 - Linux (Not Tested)
 
@@ -16,7 +24,15 @@ It is written in Python and tested it on Mac and Windows.
 
 Flask has been used to run the server and serve up the html pages. Meanwhile, Bootstrap has been used to show the Folders and the Files. To open any folder, just click on it and to download/stream any file, just click on it.
 
-![Demo](static/demo.png)
+**Snapshots**
+-
+
+**Grid Mode**
+![Demo](static/demo_1.png)
+
+**List Mode**
+![Demo](static/demo_2.png)
+
 
 **How to Run**
 -
@@ -86,7 +102,14 @@ For additional features,
 - [x] Describe how to get your own IP address for Mac, Windows, Linux
 - [ ] Add username and create a log file to track accesses and each executed instruction
 - [x] Add option for selecting available Drives
-- [ ] Add requirments.txt
+- [x] Add requirements.txt
 - [ ] Better Security
 - [x] QR Code File Download
-- [ ] Performance Improvement by converting Python directory+file code to Jinja
+- [x] Performance Improvement by converting Python directory+file code to Jinja
+
+<br>
+**Support Me**
+-
+Like my work? Click on the button below and help me keep caffeinated! ☕️ 🙏🏻
+
+<img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 30px !important;width: 120px !important;">
