@@ -210,92 +210,16 @@ def changeView():
 
 
 
-def getDirList(view,visibility):
+def getDirList():
     # print(default_view)
 
     global maxNameLength,tp_dict,hostname
-    
-    if view == 0:
-        dText = '<div id ="view0_container" class = "container" __DISPLAY__  ><div class = "row"><h5></h5></div> <div class = "row">'
-
-
-        dText_original = """
-            <div class="col-md-2 col-sm-4 col-6 mt-2">
-
-            <a data-toggle="tooltip" data-placement="left" title="Send to Phone" style = "display:block;" id = "qrphone" href = "/qr/{{currentDir}}/{{f_url}}"><img src = "/static/phone-download.png" style = "width:15px;height:15px;"></a>
-
-            <div class="thumbnail hvr-shadow">
-                
-
-                <a href="/files/{{currentDir}}/{{f_url}}"><img src = '/static/{{image}}' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">
-                        <p style="color:black;" data-toggle="tooltip" data-placement="right" title="{{f_complete}}">
-    {{f}}
-    </p>
-                </p></a>                
-
-                
-            </div>
-            </div>
-        """
-
-    elif view == 1:
-        dText = """
-
-
-
-<div id ="view1_container" class = "container" __DISPLAY__ >
-        <div class = "row mt-4">
-            <div class="col-3 mb-2" style=" text-align:center;" ><b>Name</b><hr></div>
-            <div class="col-3" style=" text-align:center;" ><b>Created Time</b><hr></div>
-            <div class="col-3" style=" text-align:center;"><b>Modified Time</b><hr></div>
-            <div class="col-3" style=" text-align:center;"><b>Size</b><hr></div>
-</div>
-
-<div class = "row">
-        """
-        dText_original = """
-       
-
-
-
-            <div class="col-3" style="margin-bottom:-10px">
-
-                <a href="/files/{{currentDir}}/{{f_url}}">
-                
-                <img src = '/static/{{image}}'  style="position:absolute; height:25px; width:25px; border:0px;"/>
-
-                <p style="margin-left:35px; color:black; text-align:left; text-decoration:none;">
-    {{f}}</p>
-                </a>
-                
-            </div>
-            <div class="col-3" style="margin-bottom:-10px"><p style="margin-left:45px;">{{dtc}}</p></div>
-            <div class="col-3" style="margin-bottom:-10px"><p style="margin-left:45px;">{{dtm}}</p></div>
-            <div class="col-3" style="margin-bottom:-10px; "><p style="margin-left:110px;">{{size}}</p></div>
-
-        """
-
-
-
-    if visibility:
-        dText = dText.replace('__DISPLAY__','style="display:none;"')
-    else:
-        dText = dText.replace('__DISPLAY__','')
-
-
-
-
-
-
 
     dList = list(os.listdir('.'))
-
     dList= list(filter(lambda x: os.path.isdir(x), os.listdir('.')))
+    dir_list_dict = {}
     fList = list(filter(lambda x: not os.path.isdir(x), os.listdir('.')))
-
-
-
-
+    file_list_dict = {}
     curDir=os.getcwd()
     # print(os.stat(os.getcwd()))
 
@@ -304,27 +228,22 @@ def getDirList(view,visibility):
     for i in dList:
         if(hidden(curDir+'/'+i)==False):
             image = 'folder5.png'
-            if view == 0:
-                if len(i)>maxNameLength:
-                    dots = "..."
-                else:
-                    dots = ""
 
-                dt = dText_original.replace("{{f}}",i[0:maxNameLength]+dots).replace("{{f_url}}",i).replace('{{currentDir}}',curDir).replace('{{f_complete}}',i).replace('{{image}}',image).replace('display:block','display:none')
-                dText += dt[:]
-            elif view == 1:
-                try:
-                    dir_stats = os.stat(i)
-                    dt = dText_original.replace("{{f}}",i).replace("{{f_url}}",i).replace('{{currentDir}}',curDir).replace('{{f_complete}}',i).replace("{{dtc}}",datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{dtm}}",datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{size}}","---").replace('{{image}}',image).replace('display:block','display:none')
-                    dText += dt[:]
-                except:
-                    pass
+            if len(i)>maxNameLength:
+                dots = "..."
+            else:
+                dots = ""
 
-    dText+='</div><div class = "row mt-4"><h5></h5></div> <hr><div class = "row mt-4">'
-    
-    # </div><hr><div class = "row">'
-
-
+            dir_stats = os.stat(i)
+            dir_list_dict[i]={}
+            dir_list_dict[i]['f'] = i[0:maxNameLength]+dots
+            dir_list_dict[i]['f_url'] = i
+            dir_list_dict[i]['currentDir'] = curDir
+            dir_list_dict[i]['f_complete'] = i
+            dir_list_dict[i]['image'] = image
+            dir_list_dict[i]['dtc'] = datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
+            dir_list_dict[i]['dtm'] = datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
+            dir_list_dict[i]['size'] = "---"
 
 
     for i in fList:
@@ -338,41 +257,38 @@ def getDirList(view,visibility):
 
                     if tp in tp_dict:
                         image = tp_dict[tp]
-
             except:
                 pass
 
             if not image:
                 image = 'file-test2.png'
+
+            if len(i)>maxNameLength:
+                dots = "..."
+            else:
+                dots = ""
+        
             
-            if view == 0:
-                if len(i)>maxNameLength:
-                    dots = "..."
-                else:
-                    dots = ""
-                    
-                dt = dText_original.replace("{{f}}",i[0:maxNameLength]+dots).replace("{{f_url}}",i).replace('{{currentDir}}',curDir).replace('{{f_complete}}',i).replace('{{image}}',image).replace('/files/','/download/')
-                dText += dt[:]
-            elif view == 1:
-                try:
-                    dir_stats = os.stat(i)
-                    dt = dText_original.replace("{{f}}",i).replace("{{f_url}}",i).replace('{{currentDir}}',curDir).replace('{{f_complete}}',i).replace("{{dtc}}",datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{dtm}}",datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')).replace("{{size}}",size(dir_stats.st_size)).replace('{{image}}',image).replace('/files/','/download/')
-                    dText += dt[:]
-                except:
-                    pass
+
+            file_list_dict[i]={}
+            file_list_dict[i]['f'] = i[0:maxNameLength]+dots
+            file_list_dict[i]['f_url'] = i
+            file_list_dict[i]['currentDir'] = curDir
+            file_list_dict[i]['f_complete'] = i
+            file_list_dict[i]['image'] = image
+
+            try:
+                dir_stats = os.stat(i)
+                file_list_dict[i]['dtc'] = datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
+                file_list_dict[i]['dtm'] = datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
+                file_list_dict[i]['size'] = size(dir_stats.st_size)
+            except:
+                file_list_dict[i]['dtc'] = "---"
+                file_list_dict[i]['dtm'] = "---"
+                file_list_dict[i]['size'] = "---"
 
 
-    dText+= "</div></div>"
-    return dText
-
-
-
-
-
-
-
-
-
+    return dir_list_dict,file_list_dict
 
 
 def getFileList():
@@ -407,20 +323,19 @@ def filePage(var = ""):
         print("Directory Doesn't Exist")
         return render_template('404.html',errorCode=300,errorText='Invalid Directory Path',favList=favList)
      
-
+    print(default_view)
 
     try:
-        if default_view == 1:
-            dirList_1 = getDirList(0,True)
-            dirList_2 = getDirList(1,False)
-            var1,var2 = "","DISABLED"
-        else:
-            dirList_1 = getDirList(1,True)
-            dirList_2 = getDirList(0,False)
+        dir_dict,file_dict = getDirList()
+        print(default_view)
+        if default_view == 0:
             var1,var2 = "DISABLED",""
+            default_view_css_1,default_view_css_2 = '','style=display:none'
+        else:
+            var1,var2 = "","DISABLED"
+            default_view_css_1,default_view_css_2 = 'style=display:none',''
 
-        dirList = dirList_1+dirList_2
-        # fileList = getFileList()
+
     except:
         return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
     
@@ -439,58 +354,8 @@ def filePage(var = ""):
             var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
 
 
+    return render_template('home.html',currentDir=var,favList=favList,default_view_css_1=default_view_css_1,default_view_css_2=default_view_css_2,view0_button=var1,view1_button = var2,currentDir_path=var_path,dir_dict=dir_dict,file_dict=file_dict)
 
-    return render_template('home.html',dirList=dirList,currentDir=var,favList=favList,view0_button=var1,view1_button = var2,currentDir_path=var_path)
-
-
-# @app.route('/files/', methods=['GET'])
-# def filePageRoot():
-#     global default_view
-
-
-#     var = ""
-
-#     if('login' not in session):
-#         return redirect('/login/')
-
-
-#     if(changeDirectory(var)==False):
-#         #Invalid Directory
-#         print("Directory Doesn't Exist")
-#         return render_template('404.html',errorCode=300,errorText='Invalid Directory Path',favList=favList)
-    
-    
-#     if default_view == 1:
-#         dirList_1 = getDirList(0,True)
-#         dirList_2 = getDirList(1,False)
-#         var1,var2 = "","DISABLED"
-#     else:
-#         dirList_1 = getDirList(1,True)
-#         dirList_2 = getDirList(0,False)
-#         var1,var2 = "DISABLED",""
-
-#     dirList = dirList_1+dirList_2
-#     try:
-#         pass
-#         # fileList = getFileList()
-#     except:
-#         return render_template('404.html',errorCode=200,errorText='Permission Denied',favList=favList)
-
-#     if osWindows:
-#         cList = var.split('/')
-#         var_path = '<a href = "/files/"><img src = "/static/root.png" style = "height:25px;width: 25px;">'+cList[0]+'</a>'
-#         for c in range(1,len(cList)):
-#             var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
-
-#     else:
-#         cList = var.split('/')
-#         var_path = '<a href = "/files/"><img src = "/static/root.png" style = "height:25px;width: 25px;">&nbsp;</a>'
-#         for c in range(0,len(cList)):
-#             var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
-
-
-
-#     return render_template('home.html',dirList=dirList,currentDir=var,favList=favList,view0_button=var1,view1_button = var2,currentDir_path=var_path)
 
 
 @app.route('/', methods=['GET'])
