@@ -7,7 +7,7 @@ Server works on,
 - Mac
 - Linux (Not Tested)
 
-It is written in Python and tested it on Mac using the following web frameworks,
+It is written in Python and tested it on Mac and Windows.
 
 **Frameworks**
 -
@@ -32,12 +32,14 @@ Now, open terminal/command prompt in the flask-fileexplorer directory and run th
 
     python setup.py
 
-You might have to configure the [config.json](config.json) file with your paths,
+You will have to configure the [config.json](config.json) file with your paths,
 
 Example for Mac,
+
     "Favorites":    ["Users/rehanahmed/Downloads","Users/rehanahmed/Documents"],
 
 Example for Windows,
+
     "Favorites":    ["C://Users//Administrator//Documents","C://Users//Administrator//Downloads"],
 
 
