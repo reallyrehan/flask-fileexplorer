@@ -108,8 +108,10 @@ For additional features,
 - [x] Performance Improvement by converting Python directory+file code to Jinja
 
 <br>
+
 **Support Me**
 -
 Like my work? Click on the button below and help me keep caffeinated! ☕️ 🙏🏻
 
-<img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 30px !important;width: 120px !important;">
+<a href = "https://www.buymeacoffee.com/rehanahmed">
+<img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 35px !important;width: 140px !important;"></a>
