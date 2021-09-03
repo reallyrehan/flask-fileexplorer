@@ -388,7 +388,7 @@ def homePage():
             # cura = currentDirectory
 
             cura='>'.join(currentDirectory.split('\\'))
-            return redirect('/'+cura)
+            return redirect('/files/'+cura)
     else:
         return redirect('/files/'+currentDirectory)
         
