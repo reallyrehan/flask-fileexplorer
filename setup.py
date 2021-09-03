@@ -171,11 +171,17 @@ def changeDirectory(path):
     # print("HELLO")
     # print(myPath)
 
+    print(currentDirectory)
+    
     try:
         os.chdir(myPath)
         ans=True
-        if(currentDirectory not in os.getcwd()):
-            ans = False
+        if (osWindows):
+            if(currentDirectory.replace('/','\\') not in os.getcwd()):
+                ans = False
+        else: 
+            if(currentDirectory not in os.getcwd()):
+                ans = False
     except:
         ans=False
     
@@ -350,7 +356,7 @@ def filePage(var = ""):
 
 
     if osWindows:
-        cList = var.split('//')
+        cList = var.split('/')
         var_path = '<a style = "color:black;"href = "/files/'+cList[0]+'">'+unquote(cList[0])+'</a>'
         for c in range(1,len(cList)):
             var_path += ' / <a style = "color:black;"href = "/files/'+'/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
@@ -555,7 +561,7 @@ def qrFile(var):
         return redirect('/login/qr/'+var)
     
     #os.chdir(currentDirectory)
-
+    
     
     pathC = unquote(var).split('/')
     if(pathC[0]==''):
@@ -580,7 +586,7 @@ def qrFile(var):
     # print(fPath)
     qr_text = 'http://'+hostname+"//download//"+fPath
 
-    print(qr_text)
+    # print(qr_text)
     return send_file(qrcode(qr_text, mode="raw"), mimetype="image/png")
     return send_file(fPath, attachment_filename=fName)
 
