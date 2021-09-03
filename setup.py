@@ -97,31 +97,39 @@ def make_zipfile(output_filename, source_dir):
 
 
 
-
 @app.route('/login/')
-def loginMethod():
+@app.route('/login/<path:var>')
+def loginMethod(var=""):
     global password
+
+    # print("LOGGING IN")
+
+    # print(var)
+
     if(password==''):
         session['login'] = True
 
 
     if('login' in session):
-        return redirect('/')
+        return redirect('/'+var)
     else:
         return render_template('login.html')
 
 
 @app.route('/login/', methods=['POST'])
-def loginPost():
+@app.route('/login/<path:var>', methods=['POST'])
+def loginPost(var = ""):
     global password
+
+
 
     text = request.form['text']
     if(text==password):
         session['login'] = True
 
-        return redirect('/')
+        return redirect('/'+var)
     else:
-        return redirect('/login/')
+        return redirect('/login/'+var)
 
 @app.route('/logout/')
 def logoutMethod():
@@ -315,7 +323,7 @@ def filePage(var = ""):
 
 
     if('login' not in session):
-        return redirect('/login/')
+        return redirect('/login/files/'+var)
 
     # print(var)
     if(changeDirectory(var)==False):
@@ -366,6 +374,7 @@ def homePage():
     if('login' not in session):
         return redirect('/login/')
     
+    print(currentDirectory)
     if osWindows:
         if(currentDirectory == ""):
             return redirect('/files/C:')
@@ -375,7 +384,7 @@ def homePage():
             cura='>'.join(currentDirectory.split('\\'))
             return redirect('/'+cura)
     else:
-        return redirect('/files/')
+        return redirect('/files/'+currentDirectory)
         
         #REDIRECT TO UNTITLED OR C DRIVE FOR WINDOWS OR / FOR MAC
 
@@ -385,7 +394,7 @@ def homePage():
 def downloadFile(var):
 
     if('login' not in session):
-        return redirect('/login/')
+        return redirect('/login/download/'+var)
     
     #os.chdir(currentDirectory)
 
@@ -394,13 +403,27 @@ def downloadFile(var):
     if(pathC[0]==''):
         pathC.remove(pathC[0])
     
+    # if osWindows:
+    #     fPath = currentDirectory+'//'.join(pathC)
+    # else:
+    #     fPath = '/'+currentDirectory+'//'.join(pathC)
+
+
     if osWindows:
-        fPath = currentDirectory+'//'.join(pathC)
+        fPath = '//'.join(pathC)
     else:
-        fPath = '/'+currentDirectory+'//'.join(pathC)
+        fPath = '/'+'//'.join(pathC)
+
+    # print("HELLO")
+    # print('//'.join(fPath.split("//")[0:-1]))
+    # print(hidden('//'.join(fPath.split("//")[0:-1])))
+
+    f_path_hidden = '//'.join(fPath.split("//")[0:-1])
+
+
 
     
-    if(hidden(fPath)):
+    if(hidden(f_path_hidden) == True or changeDirectory(f_path_hidden)== False):
         #FILE HIDDEN
         return render_template('404.html',errorCode=100,errorText='File Hidden',favList=favList)
 
@@ -419,21 +442,23 @@ def downloadFile(var):
 def downloadFolder(var):
 
     if('login' not in session):
-        return redirect('/login/')
+        return redirect('/login/downloadFolder/'+var)
     
-    #os.chdir(currentDirectory)
 
     pathC = var.split('/')
     if(pathC[0]==''):
         pathC.remove(pathC[0])
     
     if osWindows:
-        fPath = currentDirectory+'//'.join(pathC)
+        fPath = '//'.join(pathC)
     else:
-        fPath = '/'+currentDirectory+'//'.join(pathC)
+        fPath = '/'+'//'.join(pathC)
     
     
-    if(hidden(fPath)):
+    
+    f_path_hidden = '//'.join(fPath.split("//")[0:-1])
+    
+    if(hidden(f_path_hidden) == True or changeDirectory(f_path_hidden)== False):
         #FILE HIDDEN
         return render_template('404.html',errorCode=100,errorText='File Hidden',favList=favList)
 
@@ -471,13 +496,22 @@ def uploadFile(var=""):
         if(pathC[0]==''):
             pathC.remove(pathC[0])
         
+        # if osWindows:
+        #     fPath = currentDirectory+'//'.join(pathC)
+        # else:
+        #     fPath = '/'+currentDirectory+'//'.join(pathC)
+
         if osWindows:
-            fPath = currentDirectory+'//'.join(pathC)
+            fPath = +'//'.join(pathC)
         else:
-            fPath = '/'+currentDirectory+'//'.join(pathC)
+            fPath = '/'+'//'.join(pathC)
     
-    
-        if(hidden(fPath)):
+        f_path_hidden = fPath
+
+        # print(f_path_hidden)
+        # print(hidden(f_path_hidden))
+
+        if(hidden(f_path_hidden) == True or changeDirectory(f_path_hidden)== False):
             #FILE HIDDEN
             return render_template('404.html',errorCode=100,errorText='File Hidden',favList=favList)
 
@@ -518,7 +552,7 @@ def qrFile(var):
     global hostname
 
     if('login' not in session):
-        return redirect('/login/')
+        return redirect('/login/qr/'+var)
     
     #os.chdir(currentDirectory)
 
@@ -529,16 +563,17 @@ def qrFile(var):
     
 
     if osWindows:
-        fPath = currentDirectory+'//'.join(pathC)
+        fPath = '//'.join(pathC)
     else:
-        fPath = '/'+currentDirectory+'//'.join(pathC)
+        fPath = '/'+'//'.join(pathC)
 
     
+    f_path_hidden = '//'.join(fPath.split("//")[0:-1])
     
-    if(hidden(fPath)):
+    if(hidden(f_path_hidden) == True or changeDirectory(f_path_hidden)== False):
         #FILE HIDDEN
         return render_template('404.html',errorCode=100,errorText='File Hidden',favList=favList)
-
+    
 
     fName=pathC[len(pathC)-1]
     #print(fPath)
