@@ -8,6 +8,6 @@ hurry.filesize==0.9
 itsdangerous==2.0.1
 Jinja2==3.0.1
 MarkupSafe==2.0.1
-Pillow==8.3.2
+Pillow==9.0.0
 qrcode==7.1
 Werkzeug==2.0.1
