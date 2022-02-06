@@ -13,7 +13,7 @@ A file explorer that works over local area network (Wi-Fi/Ethernet) using Flask 
 Server works on,
 - Windows 
 - Mac
-- Linux (Not Tested)
+- Linux [(Tested on Ubuntu 18.04)](https://github.com/reallyrehan/flask-fileexplorer/issues/7)
 
 It is written in Python and tested it on Mac and Windows.
 
