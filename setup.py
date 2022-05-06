@@ -508,7 +508,7 @@ def uploadFile(var=""):
         #     fPath = '/'+currentDirectory+'//'.join(pathC)
 
         if osWindows:
-            fPath = +'//'.join(pathC)
+            fPath = '//'.join(pathC)
         else:
             fPath = '/'+'//'.join(pathC)
     
