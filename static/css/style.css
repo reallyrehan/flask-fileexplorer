@@ -1,0 +1,22 @@
+.content-data-table thead tr th:not(:first-child){
+text-align: center;
+}
+
+.content-data-table tbody tr td:not(:first-child){
+    text-align: center;
+}
+
+.content-data-table .table-header{
+    cursor: pointer;
+}
+
+.table-header:not(:last-child)::after{
+    content: " \2195";
+}
+
+.table-header-row{
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 99;
+}
