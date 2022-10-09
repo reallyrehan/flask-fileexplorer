@@ -224,6 +224,7 @@ def getDirList():
                     if tp in file_type[0]:
                         image = "files_icon/"+file_type[1]
                         break
+                tp = "" if not tp else tp
             except:
                 pass
             if not image:
@@ -468,4 +469,4 @@ def qrFile(var):
 if __name__ == '__main__':
     local = "127.0.0.1"
     public = '0.0.0.0'
-    app.run(host=public, debug=True, port=55555)
+    app.run(host=public, debug=True, port=80)
