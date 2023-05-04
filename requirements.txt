@@ -1,7 +1,7 @@
 certifi==2021.5.30
 click==8.0.1
 filetype==1.0.7
-Flask==2.0.1
+Flask==2.2.5
 Flask-FontAwesome==0.1.5
 Flask-QRcode==3.0.0
 hurry.filesize==0.9
