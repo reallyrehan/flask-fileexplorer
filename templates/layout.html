@@ -45,6 +45,7 @@
                       <button id = "uploadButton" class="btn btn-sm mr-4 ml-4" style="margin-bottom:6px;margin-top:3px;">Upload</button>
                 
                       {% endif %}
+
                       <button class='btn btn-light mr-1' id = "view0_button" {{view0_button}}><i class="fas fa-th-large"></i></button >
                         <button class='btn btn-light mr-3' id = "view1_button" {{view1_button}}><i class="fas fa-list"></i></button>
                     
@@ -94,7 +95,7 @@
 
       <div class = "container">
         <div class = "row">
-          <div class = "col-12 lead mt-4" style="text-align: left; margin-bottom:-10px;">
+          <div class = "col-10 lead mt-4" style="text-align: left; margin-bottom:-10px;">
             {% autoescape false %}
             {{currentDir_path}}
             
@@ -102,6 +103,13 @@
             <!-- <a href = "/files/Users">Users</a><a href = "/files/Users/rehanahmed">rehanahmed</a><a href = "/files/Users/rehanahmed/Documents">Documents</a> -->
             <hr>
           </div>
+          <div class = "col-2 lead mt-4" style="text-align: left; margin-bottom:-10px;">
+            
+            <button class='btn btn-light mr-3' id = "sort_button"><i class="fas fa-sort"></i></button ><sup><small>{{sorted_label_current}}</small></sup>
+            <!-- <a href = "/files/Users">Users</a><a href = "/files/Users/rehanahmed">rehanahmed</a><a href = "/files/Users/rehanahmed/Documents">Documents</a> -->
+            
+          </div>
+
         </div>
       </div>
               
@@ -182,6 +190,23 @@ $(function () {
         const url='/changeView?view=1';
         Http.open("GET", url);
         Http.send();
+        // $.ajax({
+				// 	url: '/api/changeView?view=1',
+
+				// 	success: function (data) {
+        //     $('#view1_container').css('display', 'none');
+				//     $('#view0_container').css('display', 'block');
+				// 	},
+
+				// });
+			});
+      $('#sort_button').click(function () {
+       
+        const Http = new XMLHttpRequest();
+        const url='/changeSort';
+        Http.open("GET", url);
+        Http.send();
+        window.location.reload();
         // $.ajax({
 				// 	url: '/api/changeView?view=1',
 

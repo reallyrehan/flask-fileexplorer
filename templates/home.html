@@ -3,14 +3,13 @@
 
 
 
-
 <div id ="view0_container" class = "container"  {{ default_view_css_1 }} >
     <div class = "row"><h5></h5></div>
 
 
 <div class = "row">
 
-{% for k,dir_i in dir_dict.items() %}
+{% for dir_i in dir_dict %}
 
 <div class="col-md-2 col-sm-4 col-6 mt-2">
 
@@ -39,7 +38,7 @@
 
 <div class = "row">
 
-    {% for k,dir_i in file_dict.items() %}
+    {% for dir_i in file_dict %}
     
     <div class="col-md-2 col-sm-4 col-6 mt-2">
     
@@ -71,20 +70,24 @@
 
 <div id ="view1_container" class = "container" {{ default_view_css_2 }} >
     <div class = "row mt-4">
+        
         <div class="col-3 mb-2" style=" text-align:center;" ><b>Name</b><hr></div>
         <div class="col-3" style=" text-align:center;" ><b>Created Time</b><hr></div>
         <div class="col-3" style=" text-align:center;"><b>Modified Time</b><hr></div>
         <div class="col-3" style=" text-align:center;"><b>Size</b><hr></div>
+        
+
 </div>
 
 <div class = "row">
 
 
-    {% for k,dir_i in dir_dict.items() %}
+    {% for dir_i in dir_dict %}
 
     <div class="col-3" style="margin-bottom:-10px">
 
         <a href="/files/{{dir_i.currentDir}}/{{dir_i.f_url}}">
+            
         
         <img src = '/static/{{dir_i.image}}'  style="position:absolute; height:25px; width:25px; border:0px;"/>
 
@@ -105,7 +108,7 @@
 <div class = "row">
 
 
-    {% for k,dir_i in file_dict.items() %}
+    {% for dir_i in file_dict %}
 
     <div class="col-3" style="margin-bottom:-10px">
 

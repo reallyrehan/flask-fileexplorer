@@ -15,11 +15,12 @@ import filetype
 
 from urllib.parse import unquote
 import socket
+
 hostname = socket.gethostname()
 IPAddr = socket.gethostbyname(hostname)
 print("Your Computer Name is: " + hostname)
 print("Your Computer IP Address is: " + IPAddr)
-maxNameLength = 15
+
 
 
 app = Flask(__name__)
@@ -33,12 +34,17 @@ qrcode = QRcode(app)
 # Config file
 config = os.path.abspath(os.path.join(os.path.dirname(__file__), "config.json"))
 with open(config) as json_data_file:
-    data = json.load(json_data_file)
-hiddenList = data["Hidden"]
-favList = data["Favorites"]
-password = data["Password"]
+    config_data = json.load(json_data_file)
+hiddenList = config_data["Hidden"]
+favList = config_data["Favorites"]
+password = config_data["Password"]
+maxFileNameLength = config_data["maxFileNameLength"]
+sort_by_selected = config_data["sort_by_selected"]
 
-currentDirectory = data["rootDir"]
+sorted_label_dict = {0:"Alphabetical", 1:"Date Created", 2:"Date Modified", 3:"Size"}
+sorted_label = sorted_label_dict[sort_by_selected]
+
+currentDirectory = config_data["rootDir"]
 osWindows = False  # Not Windows
 default_view = 0
 tp_dict = {'image': [['png', "jpg", 'svg'], 'image-icon.png'],
@@ -156,7 +162,7 @@ def changeDirectory(path):
         else:
             if(currentDirectory not in os.getcwd()):
                 ans = False
-    except:
+    except Exception as e:
         ans = False
     return ans
 
@@ -185,34 +191,56 @@ def changeView():
         "txt": default_view,
     })
 
+@app.route('/changeSort')
+def toggleSort():
+    global sort_by_selected
+    # 0 == alphabetical
+    # 1 == date created
+    # 2 == date modified
+    # 3 == size+alphabetical
+
+    sort_by_selected = sort_by_selected + 1 if sort_by_selected < 3 else 0
+
+    session['sorting_default'] = sort_by_selected
+
+
+    return jsonify({
+        "txt": sort_by_selected,
+    })
+
+
 
 def getDirList():
     # print(default_view)
-    global maxNameLength, tp_dict, hostname
+    global maxFileNameLength, tp_dict, hostname
     dList = list(os.listdir('.'))
     dList = list(filter(lambda x: os.path.isdir(x), os.listdir('.')))
-    dir_list_dict = {}
+    dir_list_dict = []
     fList = list(filter(lambda x: not os.path.isdir(x), os.listdir('.')))
-    file_list_dict = {}
+    file_list_dict = []
     curDir = os.getcwd()
     # print(os.stat(os.getcwd()))
     for i in dList:
         if(hidden(curDir+'/'+i) == False):
             image = 'folder5.png'
-            if len(i) > maxNameLength:
+            if len(i) > maxFileNameLength:
                 dots = "..."
             else:
                 dots = ""
             dir_stats = os.stat(i)
-            dir_list_dict[i] = {}
-            dir_list_dict[i]['f'] = i[0:maxNameLength]+dots
-            dir_list_dict[i]['f_url'] = re.sub("#", "|HASHTAG|", i)
-            dir_list_dict[i]['currentDir'] = curDir
-            dir_list_dict[i]['f_complete'] = i
-            dir_list_dict[i]['image'] = image
-            dir_list_dict[i]['dtc'] = datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
-            dir_list_dict[i]['dtm'] = datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
-            dir_list_dict[i]['size'] = "---"
+            temp_dir = {}
+            temp_dir['f'] = i[0:maxFileNameLength]+dots
+            temp_dir['f_url'] = re.sub("#", "|HASHTAG|", i)
+            temp_dir['currentDir'] = curDir
+            temp_dir['f_complete'] = i
+            temp_dir['image'] = image
+            temp_dir['dtc'] = datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
+            temp_dir['dtm'] = datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
+            temp_dir['size'] = "---"
+
+            dir_list_dict.append(temp_dir)
+
+
 
     from utils import get_file_extension
     for i in fList:
@@ -225,33 +253,65 @@ def getDirList():
                         image = "files_icon/"+file_type[1]
                         break
                 tp = "" if not tp else tp
-            except:
+            except Exception as e:
                 pass
             if not image:
                 image = 'files_icon/unknown-icon.png'
-            if len(i) > maxNameLength:
+            if len(i) > maxFileNameLength:
                 dots = "..."
             else:
                 dots = ""
-            file_list_dict[i] = {}
-            file_list_dict[i]['f'] = i[0:maxNameLength]+dots
-            file_list_dict[i]['f_url'] = re.sub("#", "|HASHTAG|", i)
-            file_list_dict[i]['currentDir'] = curDir
-            file_list_dict[i]['f_complete'] = i
-            file_list_dict[i]['image'] = image
-            file_list_dict[i]['supported'] = True if tp.lower() in supported_formats else False
+            temp_file = {}
+            temp_file['f'] = i[0:maxFileNameLength]+dots
+            temp_file['f_url'] = re.sub("#", "|HASHTAG|", i)
+            temp_file['currentDir'] = curDir
+            temp_file['f_complete'] = i
+            temp_file['image'] = image
+            temp_file['supported'] = True if tp.lower() in supported_formats else False
             try:
                 dir_stats = os.stat(i)
-                file_list_dict[i]['dtc'] = datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
-                file_list_dict[i]['dtm'] = datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
-                file_list_dict[i]['size'] = size(dir_stats.st_size)
-                file_list_dict[i]['size_b'] = dir_stats.st_size
-            except:
-                file_list_dict[i]['dtc'] = "---"
-                file_list_dict[i]['dtm'] = "---"
-                file_list_dict[i]['size'] = "---"
-    return dir_list_dict, file_list_dict
+                temp_file['dtc'] = datetime.utcfromtimestamp(dir_stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
+                temp_file['dtm'] = datetime.utcfromtimestamp(dir_stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
+                temp_file['size'] = size(dir_stats.st_size)
+                temp_file['size_b'] = dir_stats.st_size
+            except Exception as e:
+                temp_file['dtc'] = "---"
+                temp_file['dtm'] = "---"
+                temp_file['size'] = "---"
+                temp_file['size_b'] = -1
 
+            file_list_dict.append(temp_file)
+
+    
+    return sort_structure(dir_list_dict, file_list_dict)
+
+
+def sort_structure(dir_list_dict, file_list_dict):
+
+    global sort_by_selected, sorted_label_dict
+
+    sort_by_selected = session.get('sorting_default', sort_by_selected)
+
+    if sort_by_selected == 0:
+        dir_list_dict = sorted(dir_list_dict, key=lambda x: x['f'].lower())
+        file_list_dict = sorted(file_list_dict, key=lambda x: x['f'].lower())
+        
+    elif sort_by_selected == 1:
+        dir_list_dict = sorted(dir_list_dict, key=lambda x: x['dtc'])
+        file_list_dict = sorted(file_list_dict, key=lambda x: x['dtc'])
+        
+    elif sort_by_selected == 2:
+        dir_list_dict = sorted(dir_list_dict, key=lambda x: x['dtm'])
+        file_list_dict = sorted(file_list_dict, key=lambda x: x['dtm'])
+        
+    elif sort_by_selected == 3:
+        dir_list_dict = sorted(dir_list_dict, key=lambda x: x['f'].lower())
+        file_list_dict = sorted(file_list_dict, key=lambda x: x['size_b'])
+        
+
+    sorted_by_label = sorted_label_dict[sort_by_selected]
+
+    return dir_list_dict, file_list_dict, sorted_by_label
 
 def getFileList():
     dList = list(filter(lambda x: os.path.isfile(x), os.listdir('.')))
@@ -276,15 +336,15 @@ def filePage(var=""):
         return render_template('404.html', errorCode=300, errorText='Invalid Directory Path', favList=favList)
 
     try:
-        dir_dict, file_dict = getDirList()
+        dir_dict, file_dict, sorted_label_current = getDirList()
         if default_view == 0:
             var1, var2 = "DISABLED", ""
             default_view_css_1, default_view_css_2 = '', 'style=display:none'
         else:
             var1, var2 = "", "DISABLED"
             default_view_css_1, default_view_css_2 = 'style=display:none', ''
-    except:
-        return render_template('404.html', errorCode=200, errorText='Permission Denied', favList=favList)
+    except Exception as e:
+        return render_template('404.html', errorCode=200, errorText='Permission Denied {}'.format(e), favList=favList)
     if osWindows:
         cList = var.split('/')
         var_path = '<a style = "color:black;"href = "/files/' + \
@@ -298,7 +358,7 @@ def filePage(var=""):
         for c in range(0, len(cList)):
             var_path += ' / <a style = "color:black;"href = "/files/' + \
                 '/'.join(cList[0:c+1])+'">'+unquote(cList[c])+'</a>'
-    return render_template('home.html', currentDir=var, favList=favList, default_view_css_1=default_view_css_1, default_view_css_2=default_view_css_2, view0_button=var1, view1_button=var2, currentDir_path=var_path, dir_dict=dir_dict, file_dict=file_dict)
+    return render_template('home.html', currentDir=var, favList=favList, default_view_css_1=default_view_css_1, default_view_css_2=default_view_css_2, view0_button=var1, view1_button=var2, currentDir_path=var_path, dir_dict=dir_dict, file_dict=file_dict, sorted_label_current=sorted_label_current)
 
 
 @app.route('/', methods=['GET'])
@@ -355,8 +415,8 @@ def browseFile(var, browse):
     return send_file(fPath)
     try:
         return send_file(fPath, download_name=fName)
-    except:
-        return render_template('404.html', errorCode=200, errorText='Permission Denied', favList=favList)
+    except Exception as e:
+        return render_template('404.html', errorCode=200, errorText='Permission Denied {}'.format(e), favList=favList)
 
 
 @app.route('/downloadFolder/<path:var>')
@@ -383,7 +443,7 @@ def downloadFolder(var):
         return send_file(downloads_folder+'\\abc.zip', attachment_filename=fName)
     except Exception as e:
         print(e)
-        return render_template('404.html', errorCode=200, errorText='Permission Denied', favList=favList)
+        return render_template('404.html', errorCode=200, errorText='Permission Denied {}'.format(e), favList=favList)
 
 
 @app.errorhandler(404)
