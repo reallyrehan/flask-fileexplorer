@@ -3,5 +3,6 @@
     "Favorites":    ["Users/rehanahmed/Downloads","Users/rehanahmed/Documents"],
     "Password":     "",
     "rootDir":   "",
-    "maxFileNameLength": 15
+    "maxFileNameLength": 15,
+    "sort_by_selected": 3
 }
