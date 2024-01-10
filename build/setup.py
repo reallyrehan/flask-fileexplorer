@@ -14,7 +14,7 @@ excludes = []
 
 setup(
 name = 'WiFile',
-version = '1',
+version = '1.1',
 description = 'File explorer over wifi',
 author = 'Rehan Ahmed',
 author_email = 'rhnahdshk@gmail.com',
