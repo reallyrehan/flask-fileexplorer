@@ -481,8 +481,9 @@ def uploadFile(var=""):
         files = request.files.getlist('files[]')
         fileNo = 0
         for file in files:
+            file.filename = secure_filename(file.filename) # ensure file name is secure
             fupload = os.path.join(fPath, file.filename)
-            if secure_filename(file.filename) and not os.path.exists(fupload):
+            if not os.path.exists(fupload):
                 try:
                     file.save(fupload)
                     print(file.filename + ' Uploaded')
