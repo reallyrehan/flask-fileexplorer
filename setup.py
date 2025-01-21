@@ -47,7 +47,7 @@ sorted_label = sorted_label_dict[sort_by_selected]
 currentDirectory = config_data["rootDir"]
 osWindows = False  # Not Windows
 default_view = 0
-tp_dict = {'image': [['png', "jpg", 'svg'], 'image-icon.png'],
+tp_dict = {'image': [['png', "jpg", 'svg', "bmp", "gif"], 'image-icon.png'],
            'audio': [['mp3', 'wav'], 'audio-icon.png'], 
            'video': [['mp4', 'flv'], 'video-icon.png'],
            "pdf": [['pdf'], 'pdf-icon.png'],
@@ -231,6 +231,8 @@ def getDirList():
             temp_dir = {}
             temp_dir['f'] = i[0:maxFileNameLength]+dots
             temp_dir['f_url'] = re.sub("#", "|HASHTAG|", i)
+            if(curDir != "/"):
+                temp_dir['f_url'] = "/" + temp_dir['f_url']
             temp_dir['currentDir'] = curDir
             temp_dir['f_complete'] = i
             temp_dir['image'] = image
@@ -264,6 +266,8 @@ def getDirList():
             temp_file = {}
             temp_file['f'] = i[0:maxFileNameLength]+dots
             temp_file['f_url'] = re.sub("#", "|HASHTAG|", i)
+            if(curDir != "/"):
+                temp_file['f_url'] = "/" + temp_file['f_url']
             temp_file['currentDir'] = curDir
             temp_file['f_complete'] = i
             temp_file['image'] = image
