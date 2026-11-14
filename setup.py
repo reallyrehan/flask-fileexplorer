@@ -45,6 +45,16 @@ sorted_label_dict = {0:"Alphabetical", 1:"Date Created", 2:"Date Modified", 3:"S
 sorted_label = sorted_label_dict[sort_by_selected]
 
 currentDirectory = config_data["rootDir"]
+# Resolve a fixed serve root used to contain all file access within the shared
+# directory. Falls back to the launch directory when rootDir is left unset.
+serveRoot = os.path.realpath(currentDirectory) if currentDirectory else os.path.realpath(os.getcwd())
+
+def within_serve_root(target):
+    try:
+        real = os.path.realpath(target)
+    except Exception:
+        return False
+    return real == serveRoot or real.startswith(serveRoot + os.sep)
 osWindows = False  # Not Windows
 default_view = 0
 tp_dict = {'image': [['png', "jpg", 'svg'], 'image-icon.png'],
@@ -405,6 +415,8 @@ def browseFile(var, browse):
         # FILE HIDDEN
         return render_template('404.html', errorCode=100, errorText='File Hidden', favList=favList)
     fName = pathC[len(pathC)-1]
+    if not within_serve_root(fPath):
+        return render_template('404.html', errorCode=100, errorText='File Hidden', favList=favList)
     #print(fPath)
     if browse:
         from utils import is_media
@@ -435,6 +447,8 @@ def downloadFolder(var):
         # FILE HIDDEN
         return render_template('404.html', errorCode=100, errorText='File Hidden', favList=favList)
     fName = pathC[len(pathC)-1]+'.zip'
+    if not within_serve_root(os.getcwd()):
+        return render_template('404.html', errorCode=100, errorText='File Hidden', favList=favList)
     downloads_folder = str(Path.home() / "Downloads\\temp")
     if not os.path.exists(downloads_folder):
         os.mkdir(downloads_folder)
@@ -483,6 +497,9 @@ def uploadFile(var=""):
         for file in files:
             file.filename = secure_filename(file.filename) # ensure file name is secure
             fupload = os.path.join(fPath, file.filename)
+            if not within_serve_root(fupload):
+                text = text + file.filename + ' Failed because path is outside the shared directory<br>'
+                continue
             if not os.path.exists(fupload):
                 try:
                     file.save(fupload)
@@ -522,6 +539,8 @@ def qrFile(var):
         # FILE HIDDEN
         return render_template('404.html', errorCode=100, errorText='File Hidden', favList=favList)
     fName = pathC[len(pathC)-1]
+    if not within_serve_root(fPath):
+        return render_template('404.html', errorCode=100, errorText='File Hidden', favList=favList)
     qr_text = 'http://'+hostname+"//download//"+fPath
     return send_file(qrcode(qr_text, mode="raw"), mimetype="image/png")
     return send_file(fPath, attachment_filename=fName)
